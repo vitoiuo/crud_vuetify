@@ -1,0 +1,17 @@
+{
+  "tasks": [],
+  "projects": [
+    {
+      "id": 1,
+      "name": "Financeiro"
+    },
+    {
+      "id": 2,
+      "name": "Estudos"
+    },
+    {
+      "id": 3,
+      "name": "Trabalho"
+    }
+  ]
+}
