@@ -1,6 +1,6 @@
 <template>
   <nav>
-    <v-app-bar app dark color="pink" elevate-on-scroll>
+    <v-app-bar app dark color="pink" class="padding-a-4" elevate-on-scroll>
       <v-app-bar-nav-icon @click="drawer = !drawer" />
       <v-toolbar-title class="title text-uppercase">
         <span class="font-weight-bold">Todo</span>
@@ -19,7 +19,21 @@
       color="#F5F5F5
 "
     >
-      <p>test</p>
+      <v-list nav dense>
+        <v-list-item-group>
+          <v-list-item
+            v-for="(link, index) in links"
+            :key="index"
+            router
+            :to="link.route"
+          >
+            <v-list-item-icon>
+              <v-icon>{{ link.icon }}</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title>{{ link.text }}</v-list-item-title>
+          </v-list-item>
+        </v-list-item-group>
+      </v-list>
     </v-navigation-drawer>
   </nav>
 </template>
@@ -30,6 +44,10 @@ export default {
   data() {
     return {
       drawer: false,
+      links: [
+        { icon: "mdi-home", text: "Home", route: "/" },
+        { icon: "mdi-account", text: "Account", route: "/accounts" },
+      ],
     };
   },
 };
