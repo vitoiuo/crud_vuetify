@@ -3,8 +3,8 @@
     <v-app-bar app dark color="pink" class="padding-a-4" elevate-on-scroll>
       <v-app-bar-nav-icon @click="drawer = !drawer" />
       <v-toolbar-title class="title text-uppercase">
-        <span class="font-weight-bold">Todo</span>
-        <span class="font-weight-light">Ist</span>
+        <span class="font-weight-black">Todo</span>
+        <span class="font-weight-medium">Ist</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <!-- <v-icon> mdi-magnify </v-icon> -->
@@ -48,7 +48,7 @@ export default {
         { icon: "mdi-home", text: "Home", route: "/" },
         { icon: "mdi-account", text: "Account", route: "/accounts" },
       ],
-    };
+    }
   },
-};
+}
 </script>

@@ -1,8 +1,34 @@
 <template>
   <div class="home pa-4">
-    <h1 class="subheading grey--text">Todo</h1>
+    <h1 class="grey--text font-weight-light">Dashboard</h1>
     <v-container class="my-8">
-      <TaskCard v-for="task in tasks" :key="task.id" :task="task" />
+      <v-btn fab dark color="pink" class="mb-8"
+        ><v-icon>mdi-plus</v-icon></v-btn
+      >
+      <v-toolbar flat color="transparent" class="my-4">
+        <v-btn icon>
+          <v-icon>mdi-arrow-left</v-icon>
+        </v-btn>
+        <v-text-field
+          v-model="search"
+          append-icon="mdi-magnify"
+          label="Search News"
+          single-line
+        ></v-text-field>
+      </v-toolbar>
+
+      <v-layout row class="my-4">
+        <v-btn small plain color="grey" @click="sortBy('title')">
+          <v-icon left small> mdi-file-word</v-icon>
+          <span class="caption text-lowercase">By title</span>
+        </v-btn>
+        <v-btn small plain color="grey" @click="sortBy('project')">
+          <v-icon left small> mdi-folder</v-icon>
+          <span class="caption text-lowercase">By categorie</span>
+        </v-btn>
+      </v-layout>
+
+      <TaskCard v-for="task in filteredTasks" :key="task.id" :task="task" />
     </v-container>
   </div>
 </template>
@@ -20,6 +46,7 @@ export default {
     return {
       projects: [],
       tasks: [],
+      search: "",
     }
   },
   methods: {
@@ -32,6 +59,16 @@ export default {
       TaskApi.getTasks((response) => {
         this.tasks = response
       })
+    },
+    sortBy(key) {
+      this.tasks.sort((a, b) => (a[key] < b[key] ? -1 : 1))
+    },
+  },
+  computed: {
+    filteredTasks() {
+      return this.tasks.filter((e) =>
+        e?.title?.toLowerCase().includes(this.search.toLowerCase())
+      )
     },
   },
   created() {

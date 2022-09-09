@@ -1,21 +1,31 @@
 <template>
-  <v-card elevation="2" class="pa-4" max-width="1028">
-    <v-row wrap class="py-4">
+  <v-card
+    :disabled="task.isDone"
+    elevation="2"
+    max-width="2048"
+    class="pa-4 mb-8"
+  >
+    <v-row wrap class="pa-4">
       <v-col xs12 md6>
-        <div class="caption grey--text">Title</div>
+        <div class="caption --text">Title</div>
         <div class="">{{ task.title }}</div>
       </v-col>
       <v-col xs6 sm4 md2>
         <div class="caption grey--text">Due to</div>
-        <div>task.dueTo</div>
+        <div>{{ task.dueTo }}</div>
       </v-col>
       <v-col xs6 sm4 md2>
-        <div class="caption grey--text">Categorie</div>
-        <div>task.project</div>
+        <div>
+          <v-chip dark color="pink" class="caption my-2 font-weight-bold">{{
+            task.project
+          }}</v-chip>
+        </div>
       </v-col>
       <v-col xs6 sm4 md2>
         <div class="caption grey--text">Status</div>
-        <v-icon color="pink"> mdi-check </v-icon>
+        <v-icon :class="{ 'mx-2': true, 'icon-done': task.isDone }"
+          >mdi-check</v-icon
+        >
       </v-col>
     </v-row>
     <v-divider></v-divider>
@@ -36,3 +46,9 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+.icon-done {
+  color: #ff477e;
+}
+</style>
