@@ -1,11 +1,11 @@
 <template>
-  <div class="home pa-4">
+  <div class="home py-4 px-2">
     <h1 class="grey--text font-weight-light">Dashboard</h1>
     <v-container class="my-8">
       <v-btn fab dark color="pink" class="mb-8"
         ><v-icon>mdi-plus</v-icon></v-btn
       >
-      <v-toolbar flat color="transparent" class="my-4">
+      <v-toolbar flat color="transparent" class="">
         <v-btn icon>
           <v-icon>mdi-arrow-left</v-icon>
         </v-btn>
@@ -18,14 +18,27 @@
       </v-toolbar>
 
       <v-layout row class="my-4">
-        <v-btn small plain color="grey" @click="sortBy('title')">
-          <v-icon left small> mdi-file-word</v-icon>
-          <span class="caption text-lowercase">By title</span>
-        </v-btn>
-        <v-btn small plain color="grey" @click="sortBy('project')">
-          <v-icon left small> mdi-folder</v-icon>
-          <span class="caption text-lowercase">By categorie</span>
-        </v-btn>
+        <v-tooltip
+          bottom
+          v-for="sortOption in sortingOptions"
+          :key="sortOption.key"
+        >
+          <template v-slot:activator="{ on: tooltip }">
+            <v-btn
+              small
+              plain
+              color="grey"
+              class="px-12"
+              @click="sortBy(sortOption.key)"
+              slot="activator"
+              v-on="tooltip"
+            >
+              <v-icon left small> {{ sortOption.icon }}</v-icon>
+              <span class="caption text-lowercase">{{ sortOption.title }}</span>
+            </v-btn>
+          </template>
+          <span>{{ sortOption.toolTipText }}</span>
+        </v-tooltip>
       </v-layout>
 
       <TaskCard v-for="task in filteredTasks" :key="task.id" :task="task" />
@@ -47,6 +60,20 @@ export default {
       projects: [],
       tasks: [],
       search: "",
+      sortingOptions: [
+        {
+          key: "title",
+          title: "by title",
+          icon: "mdi-file-word",
+          toolTipText: "Sort tasks by their title",
+        },
+        {
+          key: "project",
+          title: "by categorie",
+          icon: "mdi-folder",
+          toolTipText: "Sort tasks by their categorie",
+        },
+      ],
     }
   },
   methods: {

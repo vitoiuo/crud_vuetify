@@ -13,12 +13,18 @@
       </v-btn>
     </v-app-bar>
 
-    <v-navigation-drawer
-      v-model="drawer"
-      app
-      color="#F5F5F5
-"
-    >
+    <v-navigation-drawer v-model="drawer" class="pt-4" app>
+      <v-layout column align-center>
+        <v-flex class="mt-4 text-center">
+          <v-avatar size="100">
+            <img
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ74JdjUsxNBQI_GtRFhMqrrazJsBljIhYp6gQALCqJww&s"
+              alt=""
+            />
+          </v-avatar>
+          <p class="subheading mt-1">Danonangus</p>
+        </v-flex>
+      </v-layout>
       <v-list nav dense>
         <v-list-item-group>
           <v-list-item
