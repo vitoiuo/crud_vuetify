@@ -1,7 +1,7 @@
 <template>
   <div>
-    <v-expansion-panels inset focusable>
-      <v-expansion-panel :disabled="task.isDone">
+    <v-expansion-panels focusable v-model="showContent">
+      <v-expansion-panel @click="$emit('editing-task')" :disabled="task.isDone">
         <v-expansion-panel-header disable-icon-rotate>
           <template v-slot:actions>
             <v-icon color="pink"> mdi-pencil </v-icon>
@@ -36,7 +36,17 @@
           </v-row>
         </v-expansion-panel-header>
         <v-expansion-panel-content>
-          <TaskForm :task="task" :projects="projects" />
+          <TaskForm
+            :task="task"
+            :projects="projects"
+            @task-edited="
+              (taskInput) => {
+                $emit('task-edited', taskInput)
+                $emit('editing-task')
+                showContent = -1
+              }
+            "
+          />
 
           <!-- <v-btn fab plain color="pink" max-width="52"
             ><v-icon> mdi-delete </v-icon></v-btn
@@ -63,6 +73,11 @@ export default {
       type: Array,
       required: true,
     },
+  },
+  data() {
+    return {
+      showContent: null,
+    }
   },
 }
 </script>

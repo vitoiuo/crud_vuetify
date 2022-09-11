@@ -77,6 +77,7 @@ export default {
     },
   },
   data: () => ({
+    menu: null,
     valid: true,
     taskInput: {
       id: null,
@@ -97,10 +98,10 @@ export default {
       if (this.valid) {
         if (this.task) {
           this.$emit("task-edited", this.taskInput)
+        } else {
+          this.$emit("task-added", this.taskInput)
         }
-        this.$emit("task-added", this.taskInput)
       }
-      this.reset()
     },
     reset() {
       this.$refs.form.reset()
@@ -113,6 +114,11 @@ export default {
       }
       return "edit task"
     },
+  },
+  created() {
+    if (this.task) {
+      this.taskInput = { ...this.task }
+    }
   },
 }
 </script>

@@ -2,7 +2,12 @@
   <div class="home py-4 px-2">
     <h1 class="grey--text font-weight-light">Dashboard</h1>
     <v-container class="my-8">
-      <v-btn fab dark color="pink" class="mb-8" @click="toggleModes"
+      <v-btn
+        :disabled="editMode"
+        fab
+        color="pink"
+        class="mb-8 white--text"
+        @click="toggleModes"
         ><v-icon>{{ navIcon }}</v-icon></v-btn
       >
       <div v-show="!createMode">
@@ -45,12 +50,12 @@
         </v-layout>
 
         <TaskCard
-          v-for="task in filteredTasks.sort(
-            (a, b) => Number(a.isDone) - Number(b.isDone)
-          )"
+          v-for="task in filteredTasks"
           :key="task.id"
           :task="task"
           :projects="projects.map((e) => e.name)"
+          @editing-task="editMode = !editMode"
+          @task-edited="editTask"
         />
       </div>
       <div v-show="createMode">
@@ -81,6 +86,7 @@ export default {
       tasks: [],
       search: "",
       createMode: false,
+      editMode: false,
       sortingOptions: [
         {
           key: "title",
@@ -106,6 +112,7 @@ export default {
     getTasks() {
       TaskApi.getTasks((response) => {
         this.tasks = response
+        this.sortBy()
       })
     },
     delTask(id) {
@@ -127,9 +134,15 @@ export default {
       this.createMode = !this.createMode
     },
     sortBy(key) {
-      this.tasks.sort((a, b) =>
-        a[key].toUpperCase() < b[key].toUpperCase() ? -1 : 1
-      )
+      this.tasks.sort((a, b) => Number(a.isDone) - Number(b.isDone))
+      if (key) {
+        this.tasks.sort((a, b) =>
+          a[key].toUpperCase() < b[key].toUpperCase() ? -1 : 1
+        )
+      }
+    },
+    hey(str) {
+      console.log(str)
     },
   },
   computed: {
