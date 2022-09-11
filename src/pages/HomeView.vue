@@ -88,7 +88,9 @@ export default {
       })
     },
     sortBy(key) {
-      this.tasks.sort((a, b) => (a[key] < b[key] ? -1 : 1))
+      this.tasks.sort((a, b) =>
+        a[key].toUpperCase() < b[key].toUpperCase() ? -1 : 1
+      )
     },
   },
   computed: {
