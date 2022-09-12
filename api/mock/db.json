@@ -34,6 +34,20 @@
       "project": "Estudos",
       "dueTo": "2022-09-22",
       "isDone": true
+    },
+    {
+      "id": 6,
+      "title": "Keep It Simple Stupid",
+      "project": "Estudos",
+      "dueTo": "2022-09-30",
+      "isDone": false
+    },
+    {
+      "id": 7,
+      "title": "Good Morning Ya",
+      "project": "Estudos",
+      "dueTo": null,
+      "isDone": null
     }
   ],
   "projects": [

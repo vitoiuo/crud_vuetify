@@ -6,6 +6,7 @@
         @input="taskInput.title = $event"
         :counter="24"
         :rules="nameRules"
+        @blur="validate"
         label="Title"
         required
       ></v-text-field>
@@ -56,7 +57,9 @@
       :disabled="!valid"
       color="pink white--text"
       class="mr-4"
-      @click="validate"
+      @click="
+        task ? $emit('task-edited', taskInput) : $emit('task-added', taskInput)
+      "
     >
       {{ buttonText }}
     </v-btn>
@@ -95,13 +98,6 @@ export default {
   methods: {
     validate() {
       this.$refs.form.validate()
-      if (this.valid) {
-        if (this.task) {
-          this.$emit("task-edited", this.taskInput)
-        } else {
-          this.$emit("task-added", this.taskInput)
-        }
-      }
     },
     reset() {
       this.$refs.form.reset()

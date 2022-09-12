@@ -1,9 +1,16 @@
 <template>
   <div>
-    <v-expansion-panels focusable v-model="showContent">
+    <v-expansion-panels inset focusable v-model="showContent">
       <v-expansion-panel @click="$emit('editing-task')" :disabled="task.isDone">
         <v-expansion-panel-header disable-icon-rotate>
           <template v-slot:actions>
+            <v-btn
+              plain
+              fab
+              class="mx-2"
+              @click="$emit('task-deleted', task.id)"
+              ><v-icon color="pink">mdi-delete</v-icon></v-btn
+            >
             <v-icon color="pink"> mdi-pencil </v-icon>
           </template>
           <v-row wrap class="pa-4">

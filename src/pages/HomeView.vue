@@ -56,12 +56,21 @@
           :projects="projects.map((e) => e.name)"
           @editing-task="editMode = !editMode"
           @task-edited="editTask"
+          @task-deleted="delTask"
         />
       </div>
       <div v-show="createMode">
+        <h2 class="grey--text font-weight-light mx-2 my-4">
+          Create a new task
+        </h2>
         <TaskForm
           :projects="projects.map((e) => e.name)"
-          @task-added="addTask"
+          @task-added="
+            (task) => {
+              addTask(task)
+              toggleModes()
+            }
+          "
         />
       </div>
     </v-container>
@@ -91,7 +100,7 @@ export default {
         {
           key: "title",
           title: "by title",
-          icon: "mdi-file-word",
+          icon: "mdi-book",
           toolTipText: "Sort tasks by their title",
         },
         {
