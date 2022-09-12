@@ -1,17 +1,17 @@
 <template>
   <v-form max-width="1024" ref="form" v-model="valid" lazy-validation>
-    <v-col cols="12" sm="6" md="4">
+    <v-col cols="12" sm="12" md="6">
       <v-text-field
         :value="task?.title"
         @input="taskInput.title = $event"
         :counter="24"
         :rules="nameRules"
-        @blur="validate"
         label="Title"
+        hint="Textual description of the task"
         required
       ></v-text-field>
     </v-col>
-    <v-col cols="12" sm="6" md="4">
+    <v-col cols="12" sm="6" md="6">
       <v-select
         :value="task?.project"
         @input="taskInput.project = $event"
@@ -19,7 +19,7 @@
         label="Categorie"
       ></v-select>
     </v-col>
-    <v-col cols="12" sm="6" md="4">
+    <v-col cols="12" sm="6" md="6">
       <v-menu
         ref="menu"
         v-model="menu"
@@ -47,7 +47,7 @@
         </v-date-picker>
       </v-menu>
     </v-col>
-    <v-col cols="12" sm="6" md="4">
+    <v-col cols="12" sm="6" md="6">
       <v-checkbox
         @click="taskInput.isDone = !taskInput.isDone"
         label="Done"
@@ -58,13 +58,18 @@
       color="pink white--text"
       class="mr-4"
       @click="
-        task ? $emit('task-edited', taskInput) : $emit('task-added', taskInput)
+        validate();
+        valid
+          ? task
+            ? $emit('task-edited', taskInput)
+            : $emit('task-added', taskInput) && reset()
+          : console.log('aaa');
       "
     >
       {{ buttonText }}
     </v-btn>
 
-    <v-btn plain class="mr-4 pink--text" @click="reset"> Reset Form </v-btn>
+    <!-- <v-btn plain class="mr-4 pink--text" @click="reset"> Reset Form </v-btn> -->
   </v-form>
 </template>
 
@@ -92,29 +97,33 @@ export default {
     nameRules: [
       (v) => !!v || "Title is required",
       (v) => (v && v.length <= 24) || "Title must be less than 24 characters",
+      (v) => (v && v.length >= 8) || "Title must be bigger than 8 characters",
     ],
   }),
 
   methods: {
     validate() {
-      this.$refs.form.validate()
+      this.$refs.form.validate();
     },
     reset() {
-      this.$refs.form.reset()
+      this.$refs.form.reset();
     },
   },
   computed: {
     buttonText() {
       if (!this.task) {
-        return "save task"
+        return "save task";
       }
-      return "edit task"
+      return "edit task";
     },
   },
   created() {
     if (this.task) {
-      this.taskInput = { ...this.task }
+      this.taskInput = { ...this.task };
     }
   },
-}
+  mounted() {
+    this.validate();
+  },
+};
 </script>

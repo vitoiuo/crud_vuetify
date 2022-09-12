@@ -10,25 +10,29 @@
       <!-- <v-icon> mdi-magnify </v-icon> -->
       <v-menu>
         <template v-slot:activator="{ on, attrs }">
-          <v-btn v-bind="attrs" v-on="on"> Click me </v-btn>
+          <v-btn class="d-none d-sm-flex" plain v-bind="attrs" v-on="on">
+            <v-icon left>mdi-chevron-down</v-icon>
+            <span>Menu</span>
+          </v-btn>
         </template>
-
         <v-list>
-          <v-list-item @click="onClick">
-            <v-list-item-title>Option 1</v-list-item-title>
-          </v-list-item>
-
-          <v-list-item disabled>
-            <v-list-item-title>Option 2</v-list-item-title>
-          </v-list-item>
-
-          <v-list-item @click="onClick">
-            <v-list-item-title>Option 3</v-list-item-title>
+          <v-list-item
+            v-for="(link, index) in links"
+            :key="index"
+            router
+            :to="link.route"
+            class="pink--text"
+            color="pink"
+          >
+            <v-list-item-icon>
+              <v-icon color="pink">{{ link.icon }}</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title> {{ link.text }} </v-list-item-title>
           </v-list-item>
         </v-list>
       </v-menu>
-      <v-btn plain>
-        <span>Sign out</span>
+      <v-btn plain router to="login">
+        <span>Sign in</span>
       </v-btn>
     </v-app-bar>
 
@@ -71,9 +75,9 @@ export default {
       drawer: false,
       links: [
         { icon: "mdi-home", text: "Home", route: "/" },
-        { icon: "mdi-account", text: "Account", route: "/accounts" },
+        { icon: "mdi-view-dashboard", text: "Dasboard", route: "/dashboard" },
       ],
-    }
+    };
   },
-}
+};
 </script>

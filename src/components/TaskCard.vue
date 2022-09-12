@@ -1,16 +1,14 @@
 <template>
   <div>
     <v-expansion-panels inset focusable v-model="showContent">
-      <v-expansion-panel @click="$emit('editing-task')" :disabled="task.isDone">
+      <v-expansion-panel
+        @click="$emit('editing-task')"
+        v-click-outside="disableExpansionPanel"
+        :disabled="task.isDone"
+      >
         <v-expansion-panel-header disable-icon-rotate>
           <template v-slot:actions>
-            <v-btn
-              plain
-              fab
-              class="mx-2"
-              @click="$emit('task-deleted', task.id)"
-              ><v-icon color="pink">mdi-delete</v-icon></v-btn
-            >
+            <DelPopup @deletion-accepted="$emit('task-deleted', task.id)" />
             <v-icon color="pink"> mdi-pencil </v-icon>
           </template>
           <v-row wrap class="pa-4">
@@ -48,9 +46,9 @@
             :projects="projects"
             @task-edited="
               (taskInput) => {
-                $emit('task-edited', taskInput)
-                $emit('editing-task')
-                showContent = -1
+                $emit('task-edited', taskInput);
+                $emit('editing-task');
+                disableExpansionPanel();
               }
             "
           />
@@ -65,11 +63,13 @@
 </template>
 
 <script>
-import TaskForm from "./TaskForm.vue"
+import TaskForm from "./TaskForm.vue";
+import DelPopup from "@/components/DeletionPopup.vue";
 
 export default {
   components: {
     TaskForm,
+    DelPopup,
   },
   props: {
     task: {
@@ -84,9 +84,14 @@ export default {
   data() {
     return {
       showContent: null,
-    }
+    };
   },
-}
+  methods: {
+    disableExpansionPanel() {
+      this.showContent = -1;
+    },
+  },
+};
 </script>
 
 <style scoped>

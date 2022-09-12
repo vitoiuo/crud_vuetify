@@ -1,13 +1,6 @@
 {
   "tasks": [
     {
-      "id": 1,
-      "title": "Testing 32111",
-      "project": "Trabalho",
-      "dueTo": "2022-09-21",
-      "isDone": false
-    },
-    {
       "id": 2,
       "title": "analisar materiais",
       "project": "Estudos",
@@ -44,10 +37,10 @@
     },
     {
       "id": 7,
-      "title": "Good Morning Ya",
+      "title": "Hey Hey Hey",
       "project": "Estudos",
-      "dueTo": null,
-      "isDone": null
+      "dueTo": "2022-11-18",
+      "isDone": false
     }
   ],
   "projects": [
@@ -62,6 +55,13 @@
     {
       "id": 3,
       "name": "Trabalho"
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "username": "admin",
+      "password": "admin"
     }
   ]
 }

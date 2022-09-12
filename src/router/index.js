@@ -1,24 +1,38 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import HomeView from "../pages/HomeView.vue";
+import Dashboard from "../pages/DashBoard.vue";
+import HomePage from "@/pages/HomeView.vue";
+import RegisterPage from "@/pages/UserRegistration.vue";
 
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: "/",
-    name: "HomeView",
-    component: HomeView,
+    name: "home",
+    component: HomePage,
   },
   {
-    path: "/accounts",
-    name: "AccountsView",
+    path: "/dashboard",
+    name: "dashboard",
+    component: Dashboard,
+  },
+  {
+    path: "/login",
+    name: "login",
     component: () =>
-      import(/* webpackChunkName: "about" */ "../pages/AccountsView.vue"),
+      import(/* webpackChunkName: "about" */ "../pages/UserLogin.vue"),
+  },
+  {
+    path: "/register",
+    name: "register",
+    component: RegisterPage,
   },
 ];
 
 const router = new VueRouter({
+  mode: "history",
+  base: process.env.BASE_URL,
   routes,
 });
 
