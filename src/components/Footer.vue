@@ -1,11 +1,11 @@
 <template>
   <footer>
-    <v-footer dark padless>
-      <v-card flat tile class="pink lighten-1 white--text text-center">
+    <v-footer app padless color="pink">
+      <v-card flat tile class="pink white--text text-center mx-auto">
         <v-card-text>
           <v-btn
             v-for="media in medias"
-            :key="media"
+            :key="media.link"
             class="mx-4 white--text"
             icon
             :href="media.link"
@@ -17,17 +17,14 @@
           </v-btn>
         </v-card-text>
 
-        <v-card-text class="white--text pt-0">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo
-          aliquid unde, facere sit dicta nobis repellat, suscipit officia
-          repellendus voluptas quo consequuntur eligendi nesciunt aliquam
-          praesentium maxime cum, consequatur molestiae?
+        <v-card-text width="100%" class="white--text pt-0">
+          Join millions of people who organize work and life with Todoist.
         </v-card-text>
 
-        <v-divider></v-divider>
+        <v-divider color="white"></v-divider>
 
         <v-card-text class="white--text">
-          {{ new Date().getFullYear() }} — <strong>Vuetify</strong>
+          {{ new Date().getFullYear() }} — <strong>Designed by Vito</strong>
         </v-card-text>
       </v-card>
     </v-footer>

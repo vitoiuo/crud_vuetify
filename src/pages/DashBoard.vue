@@ -1,5 +1,5 @@
 <template>
-  <div class="dashboard py-4 px-2">
+  <div class="dashboard pt-8 px-2">
     <h1 class="grey--text font-weight-light">Dashboard</h1>
     <v-container class="my-8">
       <!-- <v-btn
@@ -10,22 +10,52 @@
         @click="toggleModes"
         ><v-icon>{{ navIcon }}</v-icon></v-btn
       > -->
-      <AddPopup />
 
-      <div v-show="!createMode">
-        <v-toolbar flat color="transparent" class="">
+      <div class="mb-8">
+        <h2 class="text-h4 grey--text">
+          Tasks:&nbsp;
+          <v-fade-transition leave-absolute>
+            <span :key="`tasks-${tasks.length}`">
+              {{ tasks.length }}
+            </span>
+          </v-fade-transition>
+        </h2>
+        <v-row class="my-1" align="center">
+          <strong class="mx-4 pink--text text--lighteen-2 font-weight-light">
+            Remaining: {{ remainingTasks }}
+          </strong>
+
+          <v-divider vertical></v-divider>
+
+          <strong class="mx-4 grey--text text--lighteen-4 font-weight-light">
+            Completed: {{ completedTasks }}
+          </strong>
+
+          <v-spacer></v-spacer>
+
+          <v-progress-circular
+            color="pink"
+            :value="progress"
+            class="mr-2"
+          ></v-progress-circular>
+        </v-row>
+      </div>
+
+      <div class="pb-8">
+        <v-toolbar flat color="transparent">
           <v-btn icon>
             <v-icon>mdi-arrow-left</v-icon>
           </v-btn>
           <v-text-field
             v-model="search"
+            color="pink"
             append-icon="mdi-magnify"
             label="Search Tasks"
             single-line
           ></v-text-field>
         </v-toolbar>
 
-        <v-layout row class="my-4">
+        <v-layout row class="mt-4 mb-8">
           <v-tooltip
             bottom
             v-for="sortOption in sortingOptions"
@@ -50,6 +80,7 @@
             <span>{{ sortOption.toolTipText }}</span>
           </v-tooltip>
         </v-layout>
+        <div class="mt-12"><TaskAddPopup /> <CategorieAddPopup /></div>
 
         <TaskCard
           v-for="task in filteredTasks"
@@ -69,7 +100,6 @@
           @task-added="
             (task) => {
               addTask(task);
-              toggleModes();
             }
           "
         />
@@ -83,14 +113,16 @@ import ProjectApi from "@/projectApi";
 import TaskApi from "@/taskApi";
 import TaskCard from "@/components/TaskCard.vue";
 import TaskForm from "@/components/TaskForm.vue";
-import AddPopup from "@/components/TaskAdditionPopup.vue";
+import TaskAddPopup from "@/components/TaskAdditionPopup.vue";
+import CategorieAddPopup from "@/components/CategorieAdditionPopup.vue";
 
 export default {
   name: "HomePage",
   components: {
     TaskCard,
     TaskForm,
-    AddPopup,
+    TaskAddPopup,
+    CategorieAddPopup,
   },
   data() {
     return {
@@ -147,9 +179,10 @@ export default {
       TaskApi.editTask(() => {
         this.getTasks();
       }, task);
+      // this.scrollToTop();
     },
-    toggleModes() {
-      this.createMode = !this.createMode;
+    scrollToTop() {
+      window.scrollTo(0, 0);
     },
     sortBy(key) {
       this.tasks.sort((a, b) => Number(a.isDone) - Number(b.isDone));
@@ -163,9 +196,6 @@ export default {
         );
       }
     },
-    hey(str) {
-      console.log(str);
-    },
   },
   computed: {
     filteredTasks() {
@@ -173,11 +203,14 @@ export default {
         e?.title?.toLowerCase().includes(this.search.toLowerCase())
       );
     },
-    navIcon() {
-      if (!this.createMode) {
-        return "mdi-plus";
-      }
-      return "mdi-arrow-left";
+    completedTasks() {
+      return this.tasks.filter((task) => task.isDone).length;
+    },
+    progress() {
+      return (this.completedTasks / this.tasks.length) * 100;
+    },
+    remainingTasks() {
+      return this.tasks.length - this.completedTasks;
     },
   },
   created() {

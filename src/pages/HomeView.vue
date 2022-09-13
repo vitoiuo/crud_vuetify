@@ -10,17 +10,9 @@
           manager and to-do list app.
         </div>
       </div>
-      <v-carousel width="200" height="300" cycle hide-delimiter-background>
-        <div class="text-h3 text-center pink--text"></div>
-        <v-carousel-item xl4 v-for="(i, index) in 5" :key="index">
-          <v-sheet tile>
-            <span class="text-h4 white--text pa-8" color="grey">Hello</span>
-            <v-row align="center" justify="center">
-              <v-img gradient="to top right,#c9184a,#fff" height="300"> </v-img>
-            </v-row>
-          </v-sheet>
-        </v-carousel-item>
-      </v-carousel>
+
+      <v-img gradient="to top right,#c9184a,#fff" height="300"> </v-img>
+
       <v-row justify="center"
         ><v-btn
           rounded

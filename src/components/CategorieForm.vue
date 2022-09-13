@@ -1,18 +1,24 @@
 <template>
-  <v-form ref="form" v-model="valid" lazy-validation>
+  <v-form ref="form" class="px-4" v-model="valid" lazy-validation>
     <v-text-field
       v-model="name"
-      :counter="10"
+      :counter="12"
       :rules="nameRules"
       label="Name"
       required
     ></v-text-field>
 
-    <v-btn :disabled="!valid" color="success" class="mr-4" @click="validate">
-      Validate
-    </v-btn>
+    <v-color-picker class="my-16" hide-inputs></v-color-picker>
 
-    <v-btn color="error" class="mr-4" @click="reset"> Reset Form </v-btn>
+    <v-btn
+      large
+      :disabled="!valid"
+      color="pink white--text"
+      class="mt- mr-4 font-weight-bold"
+      @click="validate"
+    >
+      Create categorie
+    </v-btn>
   </v-form>
 </template>
 
@@ -26,17 +32,14 @@ export default {
     valid: true,
     name: "",
     nameRules: [
-      (v) => !!v || "Name is required",
-      (v) => (v && v.length <= 10) || "Name must be less than 10 characters",
+      (v) => !!v || "Categorie name is required",
+      (v) =>
+        (v && v.length <= 12) ||
+        "Categorie name must be less than 12 characters",
+      (v) =>
+        (v && v.length > 3) ||
+        "Categorie name must be bigger than 3 characters",
     ],
-    email: "",
-    emailRules: [
-      (v) => !!v || "E-mail is required",
-      (v) => /.+@.+\..+/.test(v) || "E-mail must be valid",
-    ],
-    select: null,
-    items: ["Item 1", "Item 2", "Item 3", "Item 4"],
-    checkbox: false,
   }),
 
   methods: {
@@ -46,9 +49,9 @@ export default {
     reset() {
       this.$refs.form.reset();
     },
-    resetValidation() {
-      this.$refs.form.resetValidation();
-    },
+  },
+  mounted() {
+    this.validate();
   },
 };
 </script>

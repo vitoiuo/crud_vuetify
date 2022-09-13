@@ -3,20 +3,21 @@
     <template v-slot:activator="{ on, attrs }">
       <v-btn
         large
+        plain
         color="pink"
-        class="mb-16 white--text font-weight-bold"
+        class="ml-4 mb-16 white--text font-weight-bold"
         v-bind="attrs"
         v-on="on"
-        ><v-icon left>mdi-checkbox-marked-circle-plus-outline</v-icon>
-        <span>Add Task</span>
+        ><v-icon left>mdi-tag</v-icon>
+        <span>Add Categorie</span>
       </v-btn>
     </template>
     <v-card>
       <v-card-title>
-        <span class="text-h5">Create task</span>
+        <span class="text-h5">Create categorie</span>
       </v-card-title>
       <v-card-text>
-        <TaskForm />
+        <CategorieForm />
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
@@ -29,12 +30,12 @@
 </template>
 
 <script>
-import TaskForm from "@/components/TaskForm.vue";
+import CategorieForm from "@/components/CategorieForm.vue";
 
 export default {
-  name: "TaskAdditionPopup",
+  name: "CategorieAdditionPopup",
   components: {
-    TaskForm,
+    CategorieForm,
   },
   data: () => ({
     dialog: false,

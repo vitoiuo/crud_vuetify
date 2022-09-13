@@ -40,7 +40,14 @@
       "title": "Hey Hey Hey",
       "project": "Estudos",
       "dueTo": "2022-11-18",
-      "isDone": false
+      "isDone": true
+    },
+    {
+      "id": 8,
+      "title": "Kokinnnss",
+      "project": "Estudos",
+      "dueTo": "2022-11-18",
+      "isDone": true
     }
   ],
   "projects": [
