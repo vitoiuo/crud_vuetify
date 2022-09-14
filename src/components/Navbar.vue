@@ -7,7 +7,7 @@
         <span class="font-weight-medium">Ist</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <!-- <v-icon> mdi-magnify </v-icon> -->
+
       <v-menu>
         <template v-slot:activator="{ on, attrs }">
           <v-btn class="d-none d-sm-flex" plain v-bind="attrs" v-on="on">
@@ -21,17 +21,17 @@
             :key="index"
             router
             :to="link.route"
-            class="pink--text"
             color="pink"
           >
             <v-list-item-icon>
-              <v-icon color="pink">{{ link.icon }}</v-icon>
+              <v-icon>{{ link.icon }}</v-icon>
             </v-list-item-icon>
             <v-list-item-title> {{ link.text }} </v-list-item-title>
           </v-list-item>
         </v-list>
       </v-menu>
-      <v-btn plain router to="login">
+      <v-divider class="mx-4" vertical></v-divider>
+      <v-btn plain router :to="{ name: 'login' }">
         <span>Sign in</span>
       </v-btn>
     </v-app-bar>
@@ -51,7 +51,10 @@
       <v-list nav dense>
         <v-list-item-group>
           <v-list-item
+            color="pink"
             v-for="(link, index) in links"
+            @click="drawer = false"
+            mobile-breakpoint
             :key="index"
             router
             :to="link.route"
@@ -75,7 +78,16 @@ export default {
       drawer: false,
       links: [
         { icon: "mdi-home", text: "Home", route: "/" },
-        { icon: "mdi-view-dashboard", text: "Dasboard", route: "/dashboard" },
+        {
+          icon: "mdi-bottle-tonic-plus",
+          text: "Resume",
+          route: "resume",
+        },
+        {
+          icon: "mdi-view-dashboard",
+          text: "Dasboard",
+          route: "dashboard",
+        },
       ],
     };
   },

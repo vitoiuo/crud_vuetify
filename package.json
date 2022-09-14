@@ -6,7 +6,8 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "on:mock": "vue-cli-service serve & json-server --watch api/mock/db.json"
+    "on:mock": "vue-cli-service serve & json-server --watch api/mock/db.json",
+    "mock-auth": "node api/mock/server"
   },
   "dependencies": {
     "axios": "^0.27.2",

@@ -5,7 +5,7 @@
         large
         plain
         color="pink"
-        class="ml-4 mb-16 white--text font-weight-bold"
+        class="white--text font-weight-bold"
         v-bind="attrs"
         v-on="on"
         ><v-icon left>mdi-tag</v-icon>
@@ -17,7 +17,14 @@
         <span class="text-h5">Create categorie</span>
       </v-card-title>
       <v-card-text>
-        <CategorieForm />
+        <CategorieForm
+          @categorie-added="
+            (categorie) => {
+              $emit('categorie-added', categorie);
+              dialog = false;
+            }
+          "
+        />
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>

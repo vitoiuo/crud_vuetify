@@ -1,6 +1,6 @@
 <template>
   <footer>
-    <v-footer app padless color="pink">
+    <v-footer padless color="pink">
       <v-card flat tile class="pink white--text text-center mx-auto">
         <v-card-text>
           <v-btn

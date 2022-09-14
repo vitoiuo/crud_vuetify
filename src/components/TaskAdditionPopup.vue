@@ -3,11 +3,14 @@
     <template v-slot:activator="{ on, attrs }">
       <v-btn
         large
+        plain
         color="pink"
-        class="mb-16 white--text font-weight-bold"
+        class="white--text font-weight-bold"
         v-bind="attrs"
         v-on="on"
-        ><v-icon left>mdi-checkbox-marked-circle-plus-outline</v-icon>
+        :loading="loading"
+        @click="loading = true"
+        ><v-icon left>mdi-briefcase</v-icon>
         <span>Add Task</span>
       </v-btn>
     </template>
@@ -16,11 +19,28 @@
         <span class="text-h5">Create task</span>
       </v-card-title>
       <v-card-text>
-        <TaskForm />
+        <TaskForm
+          :projects="projects"
+          @task-added="
+            (task) => {
+              $emit('task-added', task);
+              dialog = false;
+              loading = false;
+            }
+          "
+        />
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn fab color="pink" text @click="dialog = false">
+        <v-btn
+          fab
+          color="pink"
+          text
+          @click="
+            dialog = false;
+            loading = false;
+          "
+        >
           <v-icon color="pink">mdi-close</v-icon>
         </v-btn>
       </v-card-actions>
@@ -33,11 +53,18 @@ import TaskForm from "@/components/TaskForm.vue";
 
 export default {
   name: "TaskAdditionPopup",
+  props: {
+    projects: {
+      type: Array,
+      required: true,
+    },
+  },
   components: {
     TaskForm,
   },
   data: () => ({
     dialog: false,
+    loading: false,
   }),
 };
 </script>

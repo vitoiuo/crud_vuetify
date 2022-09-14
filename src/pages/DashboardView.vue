@@ -1,17 +1,9 @@
 <template>
   <div class="dashboard pt-8 px-2">
-    <h1 class="grey--text font-weight-light">Dashboard</h1>
-    <v-container class="my-8">
-      <!-- <v-btn
-        :disabled="editMode"
-        fab
-        color="pink"
-        class="mb-8 white--text"
-        @click="toggleModes"
-        ><v-icon>{{ navIcon }}</v-icon></v-btn
-      > -->
+    <h1 class="text-h3 grey--text font-weight-black">Dashboard</h1>
 
-      <div class="mb-8">
+    <v-container class="my-8">
+      <div class="mb-16">
         <h2 class="text-h4 grey--text">
           Tasks:&nbsp;
           <v-fade-transition leave-absolute>
@@ -42,7 +34,7 @@
       </div>
 
       <div class="pb-8">
-        <v-toolbar flat color="transparent">
+        <v-toolbar flat color="transparent" v-show="!showCategories">
           <v-btn icon>
             <v-icon>mdi-arrow-left</v-icon>
           </v-btn>
@@ -55,7 +47,7 @@
           ></v-text-field>
         </v-toolbar>
 
-        <v-layout row class="mt-4 mb-8">
+        <v-layout row class="mt-4 mb-8" v-show="!showCategories">
           <v-tooltip
             bottom
             v-for="sortOption in sortingOptions"
@@ -80,28 +72,38 @@
             <span>{{ sortOption.toolTipText }}</span>
           </v-tooltip>
         </v-layout>
-        <div class="mt-12"><TaskAddPopup /> <CategorieAddPopup /></div>
-
+        <div class="mt-16">
+          <TaskAddPopup
+            :projects="projects.map((e) => e.name)"
+            @task-added="
+              (task) => {
+                addTask(task);
+              }
+            "
+          />
+          <CategorieAddPopup @categorie-added="addCategorie" />
+        </div>
+        <v-sheet class="px-5 pb-5">
+          <v-btn
+            @click="showCategories = !showCategories"
+            color="pink white--text"
+            class="mt-8"
+            >show categories</v-btn
+          >
+        </v-sheet>
+        <CategorieScroller :projects="projects" v-show="showCategories" />
         <TaskCard
+          v-show="!showCategories"
           v-for="task in filteredTasks"
           :key="task.id"
           :task="task"
-          :projects="projects.map((e) => e.name)"
+          :projects="
+            projects.map((e) => {
+              return { name: e.name, color: e.color };
+            })
+          "
           @task-edited="editTask"
           @task-deleted="delTask"
-        />
-      </div>
-      <div v-show="createMode">
-        <h2 class="grey--text font-weight-light mx-2 my-4">
-          Create a new task
-        </h2>
-        <TaskForm
-          :projects="projects.map((e) => e.name)"
-          @task-added="
-            (task) => {
-              addTask(task);
-            }
-          "
         />
       </div>
     </v-container>
@@ -112,25 +114,24 @@
 import ProjectApi from "@/projectApi";
 import TaskApi from "@/taskApi";
 import TaskCard from "@/components/TaskCard.vue";
-import TaskForm from "@/components/TaskForm.vue";
 import TaskAddPopup from "@/components/TaskAdditionPopup.vue";
 import CategorieAddPopup from "@/components/CategorieAdditionPopup.vue";
+import CategorieScroller from "@/components/CategorieVScroller.vue";
 
 export default {
   name: "HomePage",
   components: {
     TaskCard,
-    TaskForm,
     TaskAddPopup,
     CategorieAddPopup,
+    CategorieScroller,
   },
   data() {
     return {
       projects: [],
       tasks: [],
       search: "",
-      createMode: false,
-      editMode: false,
+      showCategories: false,
       sortingOptions: [
         {
           key: "title",
@@ -169,6 +170,7 @@ export default {
       TaskApi.delTask(() => {
         this.getTasks();
       }, id);
+      this.scrollToTop();
     },
     addTask(task) {
       TaskApi.addTask(() => {
@@ -179,7 +181,12 @@ export default {
       TaskApi.editTask(() => {
         this.getTasks();
       }, task);
-      // this.scrollToTop();
+      this.scrollToTop();
+    },
+    addCategorie(categorie) {
+      ProjectApi.addProject(() => {
+        this.getProjects();
+      }, categorie);
     },
     scrollToTop() {
       window.scrollTo(0, 0);

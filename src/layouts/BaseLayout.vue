@@ -1,7 +1,7 @@
 <template>
   <div>
     <Navbar />
-    <v-main class="mx-8 mb-12">
+    <v-main class="mx-8 mb-12 adjust-footer">
       <router-view />
     </v-main>
     <Footer />
@@ -20,3 +20,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.adjust-footer {
+  min-height: calc(100vh - 161px - 48px);
+}
+</style>

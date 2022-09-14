@@ -22,13 +22,6 @@
       "isDone": null
     },
     {
-      "id": 5,
-      "title": "Kappa",
-      "project": "Estudos",
-      "dueTo": "2022-09-22",
-      "isDone": true
-    },
-    {
       "id": 6,
       "title": "Keep It Simple Stupid",
       "project": "Estudos",
@@ -38,30 +31,50 @@
     {
       "id": 7,
       "title": "Hey Hey Hey",
-      "project": "Estudos",
+      "project": "Trabalho",
       "dueTo": "2022-11-18",
       "isDone": true
     },
     {
       "id": 8,
-      "title": "Kokinnnss",
+      "title": "Comprar figurinhas",
       "project": "Estudos",
-      "dueTo": "2022-11-18",
-      "isDone": true
+      "dueTo": "2022-09-14",
+      "isDone": null
+    },
+    {
+      "id": 9,
+      "title": "dasdasdad",
+      "project": "Feza",
+      "dueTo": "2022-09-14",
+      "isDone": null
     }
   ],
   "projects": [
     {
-      "id": 1,
-      "name": "Financeiro"
+      "name": "Financeiro",
+      "color": "#FFC107",
+      "id": 1
     },
     {
-      "id": 2,
-      "name": "Estudos"
+      "name": "Estudos",
+      "color": "#827717",
+      "id": 2
     },
     {
-      "id": 3,
-      "name": "Trabalho"
+      "name": "Trabalho",
+      "color": "#F44336",
+      "id": 3
+    },
+    {
+      "name": "Feza",
+      "color": "#3F51B5",
+      "id": 5
+    },
+    {
+      "name": "Amor",
+      "color": "#6A1B9A",
+      "id": 6
     }
   ],
   "users": [

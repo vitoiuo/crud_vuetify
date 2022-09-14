@@ -8,14 +8,16 @@
             <v-toolbar-title>Login form</v-toolbar-title>
           </v-toolbar>
           <v-card class="pa-8">
-            <v-form>
+            <v-form class="py-8">
               <v-text-field
+                v-model="username"
                 prepend-icon="mdi-account"
                 name="login"
                 label="Username"
                 type="text"
               ></v-text-field>
               <v-text-field
+                v-model="password"
                 id="password"
                 prepend-icon="mdi-lock"
                 name="password"
@@ -26,11 +28,12 @@
             <v-card-actions>
               <v-layout column
                 ><v-btn
+                  :loading="loading"
                   large
                   class="mt-4 mb-12"
                   color="pink white--text"
                   width="128"
-                  to="/"
+                  @click="login"
                   >Login</v-btn
                 >
                 <span class="text-center dark-grey--text">
@@ -48,7 +51,32 @@
 </template>
 
 <script>
+import TaskApi from "@/taskApi";
 export default {
   name: "UserLogin",
+  data() {
+    return {
+      username: "",
+      password: "",
+      loading: false,
+    };
+  },
+  methods: {
+    login() {
+      this.loading = true;
+      TaskApi.login(this.username, this.password)
+        .then((resp) => {
+          console.log("login ok", resp);
+          this.$router.push({ name: "taskList" });
+        })
+        .catch((error) => {
+          console.log("login falhou", error);
+          //mostrar toast de usuário ou senha inválidos
+        })
+        .finally(() => {
+          this.loading = false;
+        });
+    },
+  },
 };
 </script>

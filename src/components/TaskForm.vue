@@ -1,6 +1,6 @@
 <template>
   <v-form max-width="1024" ref="form" v-model="valid" lazy-validation>
-    <v-col cols="12" sm="12" md="6">
+    <v-col cols="12" sm="12" md="8">
       <v-text-field
         :value="task?.title"
         @input="taskInput.title = $event"
@@ -11,7 +11,7 @@
         required
       ></v-text-field>
     </v-col>
-    <v-col cols="12" sm="6" md="6">
+    <v-col cols="12" sm="6" md="8">
       <v-select
         :value="task?.project"
         @input="taskInput.project = $event"
@@ -19,7 +19,7 @@
         label="Categorie"
       ></v-select>
     </v-col>
-    <v-col cols="12" sm="6" md="6">
+    <v-col cols="12" sm="6" md="8">
       <v-menu
         ref="menu"
         v-model="menu"
@@ -51,6 +51,7 @@
       <v-checkbox
         @click="taskInput.isDone = !taskInput.isDone"
         label="Done"
+        color="pink"
       ></v-checkbox>
     </v-col>
     <v-btn
@@ -121,9 +122,6 @@ export default {
     if (this.task) {
       this.taskInput = { ...this.task };
     }
-  },
-  mounted() {
-    this.validate();
   },
 };
 </script>

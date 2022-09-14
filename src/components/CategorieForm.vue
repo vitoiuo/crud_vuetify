@@ -1,24 +1,43 @@
 <template>
-  <v-form ref="form" class="px-4" v-model="valid" lazy-validation>
-    <v-text-field
-      v-model="name"
-      :counter="12"
-      :rules="nameRules"
-      label="Name"
-      required
-    ></v-text-field>
+  <v-form ref="form" class="px-4 pt-4" v-model="valid" lazy-validation>
+    <v-col sm="6" md="8">
+      <v-text-field
+        v-model="categorie.name"
+        :counter="12"
+        :rules="nameRules"
+        label="Name"
+        required
+      ></v-text-field>
+    </v-col>
+    <v-col sm="6" md="8" class="mb-16">
+      <div class="my-4 subtitle">Pick a color</div>
+      <v-color-picker
+        v-model="color"
+        dot-size="25"
+        hide-canvas
+        hide-inputs
+        hide-mode-switch
+        hide-sliders
+        mode="hexa"
+        show-swatches
+        swatches-max-height="100"
+      ></v-color-picker>
+    </v-col>
 
-    <v-color-picker class="my-16" hide-inputs></v-color-picker>
-
-    <v-btn
-      large
-      :disabled="!valid"
-      color="pink white--text"
-      class="mt- mr-4 font-weight-bold"
-      @click="validate"
-    >
-      Create categorie
-    </v-btn>
+    <v-col sm="6" md="8">
+      <v-btn
+        large
+        :disabled="!valid"
+        color="pink white--text"
+        class="mt- mr-4 font-weight-bold"
+        @click="
+          validate();
+          $emit('categorie-added', categorie);
+        "
+      >
+        Create categorie
+      </v-btn>
+    </v-col>
   </v-form>
 </template>
 
@@ -29,6 +48,12 @@ export default {};
 <script>
 export default {
   data: () => ({
+    categorie: {
+      id: undefined,
+      name: undefined,
+      color: undefined,
+    },
+    color: undefined,
     valid: true,
     name: "",
     nameRules: [
@@ -41,7 +66,6 @@ export default {
         "Categorie name must be bigger than 3 characters",
     ],
   }),
-
   methods: {
     validate() {
       this.$refs.form.validate();
@@ -50,8 +74,10 @@ export default {
       this.$refs.form.reset();
     },
   },
-  mounted() {
-    this.validate();
+  watch: {
+    color() {
+      this.categorie.color = this.color?.hex;
+    },
   },
 };
 </script>

@@ -1,32 +1,35 @@
 <template>
   <div>
     <v-expansion-panels inset focusable v-model="showContent">
-      <v-expansion-panel
-        @click="$emit('editing-task')"
-        v-click-outside="disableExpansionPanel"
-        :disabled="task.isDone"
-      >
+      <v-expansion-panel @click="$emit('editing-task')" :readonly="task.isDone">
         <v-expansion-panel-header disable-icon-rotate>
           <template v-slot:actions>
             <DelPopup @deletion-accepted="$emit('task-deleted', task.id)" />
-            <v-icon color="pink"> mdi-pencil </v-icon>
+            <v-icon v-show="!task.isDone" color="pink"> mdi-pencil </v-icon>
           </template>
           <v-row wrap class="pa-4">
             <v-col xs12 md6>
               <div class="caption grey--text">Title</div>
-              <div class="text-capitalize">
+              <div
+                :class="{
+                  'text-capitalize': true,
+                  'text-decoration-line-through': task.isDone,
+                }"
+              >
                 {{ task.title }}
               </div>
             </v-col>
             <v-col xs6 sm4 md2>
               <div class="caption grey--text">Due to</div>
-              <div>{{ task.dueTo }}</div>
+              <div :class="{ 'text-decoration-line-through': task.isDone }">
+                {{ task.dueTo }}
+              </div>
             </v-col>
             <v-col xs6 sm4 md2>
               <div>
                 <v-chip
                   dark
-                  color="pink"
+                  :color="projectColor"
                   class="caption my-2 font-weight-bold"
                   >{{ task.project }}</v-chip
                 >
@@ -43,7 +46,7 @@
         <v-expansion-panel-content>
           <TaskForm
             :task="task"
-            :projects="projects"
+            :projects="projects.map((e) => e.name)"
             @task-edited="
               (taskInput) => {
                 $emit('task-edited', taskInput);
@@ -88,7 +91,17 @@ export default {
   },
   methods: {
     disableExpansionPanel() {
+      console.log("Hellou");
       this.showContent = -1;
+    },
+  },
+  computed: {
+    projectColor() {
+      let project = this.projects.find((e) => e.name === this.task.project);
+      if (project.color) {
+        return project.color;
+      }
+      return "grey";
     },
   },
 };
