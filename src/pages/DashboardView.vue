@@ -1,10 +1,12 @@
 <template>
   <div class="dashboard pt-8 px-2">
-    <h1 class="text-h3 grey--text font-weight-black">Dashboard</h1>
+    <h1 class="text-h3 grey--text font-weight-black text--lighten-1">
+      Dashboard
+    </h1>
 
     <v-container class="my-8">
       <div class="mb-16">
-        <h2 class="text-h4 grey--text">
+        <h2 class="text-h4 grey--text text--lighten-1">
           Tasks:&nbsp;
           <v-fade-transition leave-absolute>
             <span :key="`tasks-${tasks.length}`">

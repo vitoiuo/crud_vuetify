@@ -98,8 +98,8 @@ export default {
   computed: {
     projectColor() {
       let project = this.projects.find((e) => e.name === this.task.project);
-      if (project.color) {
-        return project.color;
+      if (project?.color) {
+        return project?.color;
       }
       return "grey";
     },

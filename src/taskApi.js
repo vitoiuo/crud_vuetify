@@ -1,18 +1,18 @@
 import axios from "axios";
 
-axios.defaults.baseURL = "http://localhost:3000";
+axios.defaults.baseURL = "http://localhost:3001";
 
 export default {
   getTasks(callback) {
-    axios.get("/tasks").then((response) => callback(response.data));
+    axios.get("api/tasks").then((response) => callback(response.data));
   },
   delTask(callback, id) {
-    axios.delete(`/tasks/${id}`).then(() => callback());
+    axios.delete(`api/tasks/${id}`).then(() => callback());
   },
   addTask(callback, task) {
-    axios.post("/tasks", task).then(() => callback());
+    axios.post("api/tasks", task).then(() => callback());
   },
   editTask(callback, task) {
-    axios.put(`/tasks/${task.id}`, task).then(() => callback());
+    axios.put(`api/tasks${task.id}`, task).then(() => callback());
   },
 };

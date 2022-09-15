@@ -2,7 +2,7 @@
   <div class="login py-4 px-2">
     <h1 class="grey--text font-weight-light">Login</h1>
     <v-container fluid fill-height class="my-8">
-      <v-layout justify-center>
+      <v-layout justify-center xl="3">
         <v-flex xs12 sm8 xl4>
           <v-toolbar dark color="pink">
             <v-toolbar-title>Login form</v-toolbar-title>
@@ -38,8 +38,22 @@
                 >
                 <span class="text-center dark-grey--text">
                   Not registered? Create a account
-                  <a class="pink--text text--center" href="/register">hear</a
-                  >.</span
+
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on }">
+                      <a
+                        class="pink--text text--center"
+                        target="_blank"
+                        href="/register"
+                        @click.stop
+                        v-on="on"
+                      >
+                        hear
+                      </a>
+                    </template>
+                    Goes to register page
+                  </v-tooltip>
+                  .</span
                 ></v-layout
               >
             </v-card-actions>
@@ -51,7 +65,7 @@
 </template>
 
 <script>
-import TaskApi from "@/taskApi";
+import AuthApi from "@/authApi";
 export default {
   name: "UserLogin",
   data() {
@@ -64,10 +78,11 @@ export default {
   methods: {
     login() {
       this.loading = true;
-      TaskApi.login(this.username, this.password)
+      AuthApi.login(this.username, this.password)
         .then((resp) => {
           console.log("login ok", resp);
-          this.$router.push({ name: "taskList" });
+          localStorage.setItem("login", "logged");
+          this.$router.push({ name: "resume" });
         })
         .catch((error) => {
           console.log("login falhou", error);

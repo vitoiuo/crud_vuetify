@@ -21,7 +21,7 @@
           rounded
           class="white--text pa-8 font-weight-bold mt-16"
           color="pink"
-          :to="{ name: 'resume' }"
+          :to="{ name: 'login' }"
         >
           <span>Todo now</span>
         </v-btn>

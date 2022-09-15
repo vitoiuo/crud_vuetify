@@ -3,7 +3,7 @@
     <v-text-field
       v-model="name"
       :counter="10"
-      :rules="nameRules"
+      :rules="[required]"
       label="Username"
       required
     ></v-text-field>

@@ -6,8 +6,8 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "on:mock": "vue-cli-service serve & json-server --watch api/mock/db.json",
-    "mock-auth": "node api/mock/server"
+    "on:mock": "vue-cli-service serve & node api/mock/server",
+    "mock-auth": ""
   },
   "dependencies": {
     "axios": "^0.27.2",
@@ -33,6 +33,9 @@
     "sass-loader": "^12.0.0",
     "vue-cli-plugin-vuetify": "~2.5.5",
     "vue-template-compiler": "^2.6.14",
-    "vuetify-loader": "^1.7.0"
+    "vuetify-loader": "^1.7.0",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1"
   }
 }

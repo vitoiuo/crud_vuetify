@@ -1,11 +1,11 @@
 import axios from "axios";
 
-axios.defaults.baseURL = "http://localhost:3000";
+axios.defaults.baseURL = "http://localhost:3001";
 
 export default {
   getProjects: (callback) => {
     axios
-      .get("/projects")
+      .get("api/categories")
       .then((response) => {
         callback(response.data);
       })
@@ -14,7 +14,7 @@ export default {
       });
   },
   addProject: (callback, project) => {
-    axios.post("/projects", project).then((response) => {
+    axios.post("api/categories", project).then((response) => {
       callback(response.data);
     });
   },

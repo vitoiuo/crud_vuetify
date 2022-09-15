@@ -1,14 +1,14 @@
 <template>
   <nav>
     <v-app-bar app dark color="pink" class="padding-a-4" elevate-on-scroll>
-      <v-app-bar-nav-icon @click="drawer = !drawer" />
+      <v-app-bar-nav-icon v-show="logged" @click="drawer = !drawer" />
       <v-toolbar-title class="title text-uppercase">
         <span class="font-weight-black">Todo</span>
         <span class="font-weight-medium">Ist</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
 
-      <v-menu>
+      <v-menu :disabled="!logged">
         <template v-slot:activator="{ on, attrs }">
           <v-btn class="d-none d-sm-flex" plain v-bind="attrs" v-on="on">
             <v-icon left>mdi-chevron-down</v-icon>
@@ -31,8 +31,8 @@
         </v-list>
       </v-menu>
       <v-divider class="mx-4" vertical></v-divider>
-      <v-btn plain router :to="{ name: 'login' }">
-        <span>Sign in</span>
+      <v-btn plain router :to="{ name: 'login' }" @click="loggingOut">
+        <span>{{ userMessage }}</span>
       </v-btn>
     </v-app-bar>
 
@@ -75,6 +75,7 @@ export default {
   name: "NavigationBar",
   data() {
     return {
+      logged: "",
       drawer: false,
       links: [
         { icon: "mdi-home", text: "Home", route: "/" },
@@ -90,6 +91,23 @@ export default {
         },
       ],
     };
+  },
+  methods: {
+    loggingOut() {
+      localStorage.removeItem("login");
+    },
+  },
+  computed: {
+    userMessage() {
+      if (!this.logged) {
+        return "Sign in";
+      }
+      return "Sign out";
+    },
+  },
+  watch: {},
+  created() {
+    this.logged = localStorage.getItem("login");
   },
 };
 </script>

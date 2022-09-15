@@ -18,6 +18,11 @@ export default {
     Navbar,
     Footer,
   },
+  data() {
+    return {
+      counter: 0,
+    };
+  },
 };
 </script>
 
