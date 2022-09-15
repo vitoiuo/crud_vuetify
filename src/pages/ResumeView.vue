@@ -4,16 +4,16 @@
 
     <v-container class="my-8">
       <v-row>
-        <v-col v-for="project in projects" :key="project.id">
-          <v-card
-            xl-6
-            lg-6
-            sm-12
-            xs12
-            class="mx-auto my-2 pa-4"
-            max-width="344"
-            outlined
-          >
+        <v-col
+          cols="12"
+          sm="6"
+          md="3"
+          xl="2"
+          xs="12"
+          v-for="project in projects"
+          :key="project.id"
+        >
+          <v-card class="mx-auto my-2 pa-4" max-width="344" outlined>
             <v-list-item three-line>
               <v-list-item-content>
                 <div class="text-overline mb-4">STATUS</div>

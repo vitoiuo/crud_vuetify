@@ -10,8 +10,16 @@
 
     <v-text-field
       v-model="password"
-      :rules="passwordRules"
+      :rules="[required, min6]"
       label="Password"
+      type="password"
+      required
+    ></v-text-field>
+
+    <v-text-field
+      v-model="confirmedPassword"
+      :rules="[required, min6, matchingPasswords]"
+      label="Confirm Password"
       type="password"
       required
     ></v-text-field>
@@ -43,18 +51,8 @@ export default {
   data: () => ({
     valid: true,
     name: "",
-    nameRules: [
-      (v) => !!v || "Username is required",
-      (v) =>
-        (v && v.length <= 10) || "Username must be less than 10 characters",
-      (v) => (v && v.length > 3) || "Username must be bigger than 3 characters",
-    ],
     password: "",
-    passwordRules: [
-      (v) => !!v || "Password is required",
-      (v) =>
-        (v && v.length >= 8) || "Password must be bigger than 8 characters",
-    ],
+    confirmedPassword: "",
     checkbox: false,
   }),
 
@@ -67,6 +65,27 @@ export default {
     },
     resetValidation() {
       this.$refs.form.resetValidation();
+    },
+    required(value) {
+      if (value) {
+        return true;
+      } else {
+        return "This field is required.";
+      }
+    },
+    min6(value) {
+      if (value.length >= 6) {
+        return true;
+      } else {
+        return "Password should have more than 6 characters.";
+      }
+    },
+    matchingPasswords() {
+      if (this.password === this.confirmedPassword) {
+        return true;
+      } else {
+        return "Passwords does not match.";
+      }
     },
   },
 };
