@@ -39,4 +39,13 @@ module.exports = {
       res.send(user);
     });
   },
+  add: (req, res) => {
+    try {
+      const { username, name, email, password } = req.body;
+      const newUser = addUser(username, name, email, password);
+      res.send(newUser);
+    } catch (error) {
+      res.status(404).end(error);
+    }
+  },
 };

@@ -10,11 +10,11 @@
           manager and to-do list app.
         </div>
       </div>
-      <v-parallax
+      <v-img
         src="https://images.pexels.com/photos/1038628/pexels-photo-1038628.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
         height="512"
       >
-      </v-parallax>
+      </v-img>
 
       <v-row justify="center"
         ><v-btn
@@ -30,7 +30,7 @@
     <v-timeline :dense="$vuetify.breakpoint.smAndDown">
       <v-timeline-item color="pink  lighten-2" fill-dot right>
         <v-card>
-          <v-card-title class="purple lighten-2">
+          <v-card-title class="pink lighten-2">
             <v-icon dark size="42" class="mr-4"> mdi-magnify </v-icon>
             <h2 class="text-h4 white--text font-weight-light">Title 1</h2>
           </v-card-title>
@@ -51,7 +51,7 @@
 
       <v-timeline-item color="pink lighten-1" fill-dot left small>
         <v-card>
-          <v-card-title class="amber lighten-1 justify-end">
+          <v-card-title class="pink lighten-1 justify-end">
             <h2 class="text-h4 mr-4 white--text font-weight-light">Title 2</h2>
             <v-icon dark size="42"> mdi-home-outline </v-icon>
           </v-card-title>
@@ -72,7 +72,7 @@
 
       <v-timeline-item color="pink lighten-1" fill-dot right>
         <v-card>
-          <v-card-title class="cyan lighten-1">
+          <v-card-title class="pink lighten-1">
             <v-icon class="mr-4" dark size="42"> mdi-email-outline </v-icon>
             <h2 class="text-h4 white--text font-weight-light">Title 3</h2>
           </v-card-title>
@@ -89,7 +89,7 @@
 
       <v-timeline-item color="pink lighten-1" fill-dot left small>
         <v-card>
-          <v-card-title class="red lighten-1 justify-end">
+          <v-card-title class="pink lighten-1 justify-end">
             <h2 class="text-h4 mr-4 white--text font-weight-light">Title 4</h2>
             <v-icon dark size="42"> mdi-account-multiple-outline </v-icon>
           </v-card-title>
@@ -111,7 +111,7 @@
 
       <v-timeline-item color="pink lighten-1" fill-dot right>
         <v-card>
-          <v-card-title class="green lighten-1">
+          <v-card-title class="pink lighten-1">
             <v-icon class="mr-4" dark size="42"> mdi-phone-in-talk </v-icon>
             <h2 class="text-h4 white--text font-weight-light">Title 5</h2>
           </v-card-title>

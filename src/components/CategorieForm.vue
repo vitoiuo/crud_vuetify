@@ -32,7 +32,7 @@
         class="mt- mr-4 font-weight-bold"
         @click="
           validate();
-          $emit('categorie-added', categorie);
+          $emit('categorie-added', categorie) && reset();
         "
       >
         Create categorie

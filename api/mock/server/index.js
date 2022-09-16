@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 
 const auth = require("./controllers/auth");
 const tasks = require("./controllers/tasks");
+const projects = require("./controllers/projects");
 
 const YELLOW = "\x1b[33m%s\x1b[0m";
 const WHITE = "\x1b[37m";
@@ -29,6 +30,10 @@ app.get("/api/tasks/:id", tasks.find);
 app.post("/api/tasks", tasks.add);
 app.post("/api/tasks/:id", tasks.update);
 app.delete("/api/tasks/:id", tasks.remove);
+// PROJECTS
+app.get("/api/projects", projects.find);
+app.post("/api/projects", projects.add);
+app.delete("/api/projects/:id", projects.remove);
 
 app.listen(PORT, () => {
   console.log(YELLOW, "🆙 JSON Server is running on port: " + PORT, WHITE);

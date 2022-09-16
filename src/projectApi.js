@@ -5,7 +5,7 @@ axios.defaults.baseURL = "http://localhost:3001";
 export default {
   getProjects: (callback) => {
     axios
-      .get("api/categories")
+      .get("api/projects")
       .then((response) => {
         callback(response.data);
       })
@@ -14,8 +14,11 @@ export default {
       });
   },
   addProject: (callback, project) => {
-    axios.post("api/categories", project).then((response) => {
+    axios.post("api/projects", project).then((response) => {
       callback(response.data);
     });
+  },
+  delProject(callback, id) {
+    axios.delete(`api/tasks/${id}`).then(() => callback());
   },
 };

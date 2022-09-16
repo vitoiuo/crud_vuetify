@@ -3,7 +3,6 @@
     <h1 class="text-h3 grey--text font-weight-black text--lighten-1">
       Dashboard
     </h1>
-
     <v-container class="my-8">
       <div class="mb-16">
         <h2 class="text-h4 grey--text text--lighten-1">
@@ -28,15 +27,16 @@
           <v-spacer></v-spacer>
 
           <v-progress-circular
+            size="48"
+            width="6"
             color="pink"
             :value="progress"
             class="mr-2"
           ></v-progress-circular>
         </v-row>
       </div>
-
       <div class="pb-8">
-        <v-toolbar flat color="transparent" v-show="!showCategories">
+        <v-toolbar flat color="transparent">
           <v-btn icon>
             <v-icon>mdi-arrow-left</v-icon>
           </v-btn>
@@ -44,12 +44,25 @@
             v-model="search"
             color="pink"
             append-icon="mdi-magnify"
-            label="Search Tasks"
+            :label="searchBarText"
             single-line
           ></v-text-field>
         </v-toolbar>
-
-        <v-layout row class="mt-4 mb-8" v-show="!showCategories">
+        <v-radio-group
+          mandatory
+          class="ml-8 grey--text"
+          v-model="toggleSearch"
+          row
+        >
+          <template v-slot:label>
+            <div class="py-2">
+              Your search <strong class="pink--text">option </strong>
+            </div>
+          </template>
+          <v-radio color="pink" label="Tasks" :value="false"></v-radio>
+          <v-radio color="pink" label="Categories" :value="true"></v-radio>
+        </v-radio-group>
+        <v-layout row class="mt-4 mb-8">
           <v-tooltip
             bottom
             v-for="sortOption in sortingOptions"
@@ -85,17 +98,13 @@
           />
           <CategorieAddPopup @categorie-added="addCategorie" />
         </div>
-        <v-sheet class="px-5 pb-5">
-          <v-btn
-            @click="showCategories = !showCategories"
-            color="pink white--text"
-            class="mt-8"
-            >show categories</v-btn
-          >
-        </v-sheet>
-        <CategorieScroller :projects="projects" v-show="showCategories" />
+        <v-sheet class="px-5 pb-5"> </v-sheet>
+        <CategorieScroller
+          @categorie-deleted="delCategorie"
+          :projects="projects"
+        />
+        <div v-show="!filteredTasks">Empty</div>
         <TaskCard
-          v-show="!showCategories"
           v-for="task in filteredTasks"
           :key="task.id"
           :task="task"
@@ -119,9 +128,10 @@ import TaskCard from "@/components/TaskCard.vue";
 import TaskAddPopup from "@/components/TaskAdditionPopup.vue";
 import CategorieAddPopup from "@/components/CategorieAdditionPopup.vue";
 import CategorieScroller from "@/components/CategorieVScroller.vue";
+import projectApi from "@/projectApi";
 
 export default {
-  name: "HomePage",
+  name: "DashboardView",
   components: {
     TaskCard,
     TaskAddPopup,
@@ -133,7 +143,8 @@ export default {
       projects: [],
       tasks: [],
       search: "",
-      showCategories: false,
+      toggleSearch: false,
+
       sortingOptions: [
         {
           key: "title",
@@ -190,6 +201,12 @@ export default {
         this.getProjects();
       }, categorie);
     },
+    delCategorie(id) {
+      console.log(id);
+      projectApi.delProject(() => {
+        this.getProjects;
+      }, id);
+    },
     scrollToTop() {
       window.scrollTo(0, 0);
     },
@@ -208,6 +225,11 @@ export default {
   },
   computed: {
     filteredTasks() {
+      if (this.toggleSearch) {
+        return this.tasks.filter((e) =>
+          e?.project?.toLowerCase().includes(this.search.toLowerCase())
+        );
+      }
       return this.tasks.filter((e) =>
         e?.title?.toLowerCase().includes(this.search.toLowerCase())
       );
@@ -216,15 +238,34 @@ export default {
       return this.tasks.filter((task) => task.isDone).length;
     },
     progress() {
+      if (!this.completedTasks) {
+        return 0;
+      }
       return (this.completedTasks / this.tasks.length) * 100;
     },
     remainingTasks() {
       return this.tasks.length - this.completedTasks;
     },
+    searchBarText() {
+      if (this.toggleSearch) {
+        return "Search Categories";
+      }
+      return "Search Tasks";
+    },
+    switchText() {
+      if (this.toggleSearch) {
+        return "Search Tasks";
+      }
+      return "Search categories";
+    },
   },
   created() {
     this.getProjects();
     this.getTasks();
+    if (this.$route.params.categorie) {
+      this.search = this.$route.params.categorie;
+      this.toggleSearch = true;
+    }
   },
 };
 </script>

@@ -1,6 +1,6 @@
 <template>
   <div class="resume pt-8 px-2">
-    <h1 class="text-h3 grey--text font-weight-black">Resume</h1>
+    <h1 class="text-h3 grey--text font-weight-black text--lighten-1">Resume</h1>
 
     <v-container class="my-8">
       <v-row>
@@ -13,45 +13,75 @@
           v-for="project in projects"
           :key="project.id"
         >
-          <v-card class="mx-auto my-2 pa-4" max-width="344" outlined>
-            <v-list-item three-line>
-              <v-list-item-content>
-                <div class="text-overline mb-4">STATUS</div>
-                <v-list-item-title class="text-h5 mb-1">
-                  {{ project.name }}
-                </v-list-item-title>
-                <v-list-item-subtitle
-                  >There are
-                  {{
-                    tasksProjects[project.name]
-                      ? tasksProjects[project.name]
-                      : 0
-                  }}
-                  {{
-                    `${tasksProjects[project.name] === 1 ? "task" : "tasks"}`
-                  }}
-                  with that categorie</v-list-item-subtitle
-                >
-              </v-list-item-content>
+          <v-hover>
+            <template v-slot:default="{ hover }">
+              <v-card class="mx-auto my-2 px-4 pb-8" max-width="344" outlined>
+                <v-list-item three-line>
+                  <v-list-item-content>
+                    <div class="text-overline mb-4">STATUS</div>
+                    <v-list-item-title class="text-h5 mb-1">
+                      {{ project.name }}
+                    </v-list-item-title>
+                    <v-list-item-subtitle
+                      >There are
+                      {{
+                        tasksProjects[project.name]
+                          ? tasksProjects[project.name]
+                          : 0
+                      }}
+                      {{
+                        `${
+                          tasksProjects[project.name] === 1 ? "task" : "tasks"
+                        }`
+                      }}
+                      with that categorie</v-list-item-subtitle
+                    >
+                  </v-list-item-content>
 
-              <v-progress-circular
-                width="16"
-                size="80"
-                :value="
-                  tasksProjects[project.name]
-                    ? (tasksProjects[project.name] / tasks.length) * 100
-                    : 0
-                "
-                :color="project.color"
-              ></v-progress-circular>
-            </v-list-item>
+                  <v-progress-circular
+                    width="16"
+                    size="100"
+                    class="mt-4"
+                    label="aaaa"
+                    :value="
+                      tasksProjects[project.name]
+                        ? (tasksProjects[project.name] / tasks.length) * 100
+                        : 0
+                    "
+                    :color="project.color"
+                  >
+                    <span class="black--text font-weight-bold">
+                      {{
+                        tasksProjects[project.name]
+                          ? (
+                              (tasksProjects[project.name] / tasks.length) *
+                              100
+                            ).toFixed(1)
+                          : 0
+                      }}%
+                    </span>
+                  </v-progress-circular>
+                </v-list-item>
 
-            <v-card-actions>
-              <v-btn rounded :color="project.color" class="white--text">
-                Visualize
-              </v-btn>
-            </v-card-actions>
-          </v-card>
+                <v-fade-transition>
+                  <v-overlay v-if="hover" absolute :color="project.color">
+                    <v-btn
+                      rounded
+                      :color="project.color"
+                      class="white--text"
+                      router
+                      :to="{
+                        name: 'dashboardResume',
+                        params: { categorie: project.name },
+                      }"
+                    >
+                      Visualize
+                    </v-btn>
+                  </v-overlay>
+                </v-fade-transition>
+              </v-card>
+            </template>
+          </v-hover>
         </v-col>
       </v-row>
     </v-container>

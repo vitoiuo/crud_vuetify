@@ -78,16 +78,16 @@ export default {
       logged: "",
       drawer: false,
       links: [
-        { icon: "mdi-home", text: "Home", route: "/" },
+        { icon: "mdi-home", text: "Home", route: { name: "home" } },
         {
           icon: "mdi-bottle-tonic-plus",
           text: "Resume",
-          route: "resume",
+          route: { name: "resume" },
         },
         {
           icon: "mdi-view-dashboard",
           text: "Dasboard",
-          route: "dashboard",
+          route: { name: "dashboard" },
         },
       ],
     };

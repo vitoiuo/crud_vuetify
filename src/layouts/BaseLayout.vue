@@ -3,6 +3,16 @@
     <Navbar />
     <v-main class="mx-8 mb-12 adjust-footer">
       <router-view />
+      <v-btn
+        fab
+        large
+        class="zIndex ma-8 pink white--text lighten-1"
+        fixed
+        bottom
+        right
+        @click="scrollToTop"
+        ><v-icon>mdi-arrow-up</v-icon></v-btn
+      >
     </v-main>
     <Footer />
   </div>
@@ -18,10 +28,10 @@ export default {
     Navbar,
     Footer,
   },
-  data() {
-    return {
-      counter: 0,
-    };
+  methods: {
+    scrollToTop() {
+      window.scrollTo(0, 0);
+    },
   },
 };
 </script>
@@ -29,5 +39,8 @@ export default {
 <style scoped>
 .adjust-footer {
   min-height: calc(100vh - 161px - 48px);
+}
+.zIndex {
+  z-index: 2;
 }
 </style>

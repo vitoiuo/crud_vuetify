@@ -6,10 +6,12 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "on:mock": "vue-cli-service serve & node api/mock/server",
+    "mock": "node api/mock/server",
     "mock-auth": ""
   },
   "dependencies": {
+    "@vueuse/components": "^9.2.0",
+    "@vueuse/core": "^9.2.0",
     "axios": "^0.27.2",
     "core-js": "^3.8.3",
     "vee-validate": "^4.6.7",

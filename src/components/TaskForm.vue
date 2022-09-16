@@ -49,7 +49,7 @@
     </v-col>
     <v-col cols="12" sm="6" md="6">
       <v-checkbox
-        @click="taskInput.isDone = !taskInput.isDone"
+        v-model="taskInput.isDone"
         label="Done"
         color="pink"
       ></v-checkbox>
@@ -64,13 +64,11 @@
           ? task
             ? $emit('task-edited', taskInput)
             : $emit('task-added', taskInput) && reset()
-          : console.log('aaa');
+          : console.log('invalid');
       "
     >
       {{ buttonText }}
     </v-btn>
-
-    <!-- <v-btn plain class="mr-4 pink--text" @click="reset"> Reset Form </v-btn> -->
   </v-form>
 </template>
 

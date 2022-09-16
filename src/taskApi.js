@@ -13,6 +13,12 @@ export default {
     axios.post("api/tasks", task).then(() => callback());
   },
   editTask(callback, task) {
-    axios.put(`api/tasks${task.id}`, task).then(() => callback());
+    axios
+      .post(`api/tasks/${task.id}`, task)
+      .then(() => callback())
+      .catch((e) => {
+        console.log(e.message);
+        return Promise.reject(e);
+      });
   },
 };

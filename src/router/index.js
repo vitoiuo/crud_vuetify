@@ -17,6 +17,18 @@ const routes = [
     path: "/dashboard",
     name: "dashboard",
     component: Dashboard,
+    children: [
+      {
+        path: "/dashboard/:categorie",
+        name: "dashboardResume",
+        component: Dashboard,
+      },
+      {
+        path: "/dashboard",
+        name: "dashboard",
+        component: Dashboard,
+      },
+    ],
   },
   {
     path: "/login",

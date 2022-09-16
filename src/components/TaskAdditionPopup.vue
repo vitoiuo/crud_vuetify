@@ -8,7 +8,6 @@
         class="white--text font-weight-bold"
         v-bind="attrs"
         v-on="on"
-        :loading="loading"
         @click="loading = true"
         ><v-icon left>mdi-briefcase</v-icon>
         <span>Add Task</span>
