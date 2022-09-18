@@ -15,4 +15,18 @@ export default {
         });
     });
   },
+  singUp: (user) => {
+    return new Promise((resolve, reject) => {
+      api
+        .post("/api/auth/signup", user)
+        .then((response) => {
+          console.log("API AUTH: SUCCESS");
+          return resolve(response.data);
+        })
+        .catch((error) => {
+          console.log("API AUTH: ERROR");
+          return reject(error);
+        });
+    });
+  },
 };

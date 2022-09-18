@@ -1,15 +1,30 @@
 <template>
   <v-form ref="form" v-model="valid" lazy-validation>
     <v-text-field
-      v-model="name"
-      :counter="10"
+      v-model="newUser.name"
+      :counter="124"
+      :rules="[required]"
+      label="Name"
+      required
+    ></v-text-field>
+
+    <v-text-field
+      v-model="newUser.email"
+      :rules="[required, validEmail]"
+      label="Email"
+      required
+    ></v-text-field>
+
+    <v-text-field
+      v-model="newUser.username"
+      :counter="24"
       :rules="[required]"
       label="Username"
       required
     ></v-text-field>
 
     <v-text-field
-      v-model="password"
+      v-model="newUser.password"
       :rules="[required, min6]"
       label="Password"
       type="password"
@@ -26,7 +41,7 @@
 
     <v-checkbox
       v-model="checkbox"
-      :rules="[(v) => !!v || 'You must agree to continue!']"
+      :rules="[required]"
       label="Do you agree with our terms?"
       required
     ></v-checkbox>
@@ -35,23 +50,26 @@
       :disabled="!valid"
       color="pink white--text"
       class="mr-4 font-weight-bold"
-      @click="validate"
+      router
+      :to="{ name: 'login' }"
     >
-      Validate
+      Register
     </v-btn>
   </v-form>
 </template>
 
 <script>
-export default {};
-</script>
+import authApi from "@/api/authApi";
 
-<script>
 export default {
   data: () => ({
     valid: true,
-    name: "",
-    password: "",
+    newUser: {
+      name: "",
+      email: "",
+      username: "",
+      password: "",
+    },
     confirmedPassword: "",
     checkbox: false,
   }),
@@ -81,12 +99,25 @@ export default {
       }
     },
     matchingPasswords() {
-      if (this.password === this.confirmedPassword) {
+      if (this.newUser.password === this.confirmedPassword) {
         return true;
       } else {
         return "Passwords does not match.";
       }
     },
+    validEmail(value) {
+      if (/.+@.+\..+/.test(value)) {
+        return true;
+      } else {
+        return "E-mail must be valid";
+      }
+    },
+    addUser() {
+      authApi.singUp(this.newUser);
+    },
+  },
+  beforeRouteDestroy() {
+    this.addUser();
   },
 };
 </script>

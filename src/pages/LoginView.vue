@@ -43,7 +43,6 @@
                     <template v-slot:activator="{ on }">
                       <a
                         class="pink--text text--center"
-                        target="_blank"
                         href="/register"
                         @click.stop
                         v-on="on"
@@ -96,6 +95,9 @@ export default {
       window.localStorage.setItem("loggedUserInfos", JSON.stringify(user));
       window.localStorage.setItem("loggedUserToken", user.token);
     },
+  },
+  beforeDestroy() {
+    this.$router.go();
   },
 };
 </script>

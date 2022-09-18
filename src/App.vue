@@ -19,4 +19,7 @@ export default {
 html {
   scroll-behavior: smooth;
 }
+* {
+  text-decoration: none;
+}
 </style>

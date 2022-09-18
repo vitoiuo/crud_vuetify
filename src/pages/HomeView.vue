@@ -22,7 +22,7 @@
           rounded
           class="white--text pa-8 font-weight-bold mt-16"
           color="pink"
-          :to="{ name: 'login' }"
+          @click="redirect"
         >
           <span>Todo now</span>
         </v-btn>
@@ -137,8 +137,12 @@ export default {
   name: "HomePage",
 
   methods: {
-    redirectToDashboard() {
-      this.$router.push("dashboard");
+    redirect() {
+      if (localStorage.getItem("loggedUser")) {
+        this.$router.push({ name: "resume" });
+      } else {
+        this.$router.push({ name: "login" });
+      }
     },
   },
 };

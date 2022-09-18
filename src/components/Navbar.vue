@@ -1,14 +1,15 @@
 <template>
   <nav>
     <v-app-bar app dark color="pink" class="padding-a-4" elevate-on-scroll>
-      <v-app-bar-nav-icon @click="drawer = !drawer" />
+      <v-app-bar-nav-icon v-if="loggedUser" @click="drawer = !drawer" />
       <v-toolbar-title class="title text-uppercase">
-        <span class="font-weight-black">Todo</span>
-        <span class="font-weight-medium">Ist</span>
+        <a class="white--text" href="/">
+          <span class="font-weight-black">Todo</span>
+          <span class="font-weight-medium">Ist</span>
+        </a>
       </v-toolbar-title>
       <v-spacer></v-spacer>
-
-      <v-menu>
+      <v-menu v-if="loggedUser">
         <template v-slot:activator="{ on, attrs }">
           <v-btn class="d-none d-sm-flex" plain v-bind="attrs" v-on="on">
             <v-icon left>mdi-chevron-down</v-icon>
@@ -31,7 +32,11 @@
         </v-list>
       </v-menu>
       <v-divider class="mx-4" vertical></v-divider>
-      <v-btn plain router :to="{ name: 'login' }" @click="loggingOut">
+      <v-btn
+        plain
+        router
+        @click="loggedUser ? loggingOut() : $router.push({ name: 'login' })"
+      >
         <span>{{ userMessage }}</span>
       </v-btn>
     </v-app-bar>
@@ -43,7 +48,12 @@
             <template v-slot:activator="{ on }">
               <v-btn icon x-large v-on="on">
                 <v-avatar color="brown" size="64">
-                  <span class="white--text text-h5">DN</span>
+                  <span class="white--text text-h5">{{
+                    loggedUser?.name
+                      .split(" ")
+                      .map((e) => e[0])
+                      .join("")
+                  }}</span>
                 </v-avatar>
               </v-btn>
             </template>
@@ -51,7 +61,12 @@
               <v-list-item-content class="justify-center">
                 <div class="mx-auto text-center">
                   <v-avatar color="brown" size="64" class="mb-2">
-                    <span class="white--text text-h5">DN</span>
+                    <span class="white--text text-h5">{{
+                      loggedUser?.name
+                        .split(" ")
+                        .map((e) => e[0])
+                        .join("")
+                    }}</span>
                   </v-avatar>
                   <h3>{{ loggedUser?.name }}</h3>
                   <p class="text-caption mt-1">{{ loggedUser?.email }}</p>
@@ -65,7 +80,9 @@
               </v-list-item-content>
             </v-card>
           </v-menu>
-          <p class="subheading mt-2">{{ loggedUser?.name }}</p>
+          <p class="subheading mt-2 text-capitalize">
+            {{ loggedUser?.username }}
+          </p>
         </v-flex>
       </v-layout>
       <v-list nav dense>
@@ -95,7 +112,6 @@ export default {
   name: "NavigationBar",
   data() {
     return {
-      loggedUser: {},
       drawer: false,
       links: [
         { icon: "mdi-home", text: "Home", route: { name: "home" } },
@@ -115,20 +131,22 @@ export default {
   methods: {
     loggingOut() {
       localStorage.clear();
-      this.$router.push({ name: "home" });
+      this.$router.go();
     },
   },
   computed: {
     userMessage() {
-      if (!this.logged) {
+      if (!this.loggedUser) {
         return "Sign in";
       }
       return "Sign out";
     },
-  },
-  watch: {},
-  created() {
-    this.loggedUser = JSON.parse(localStorage.getItem("loggedUserInfos"));
+    loggedUser() {
+      if (localStorage.getItem("loggedUserInfos")) {
+        return JSON.parse(localStorage.getItem("loggedUserInfos"));
+      }
+      return undefined;
+    },
   },
 };
 </script>
