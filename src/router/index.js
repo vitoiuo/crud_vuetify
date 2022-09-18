@@ -1,6 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Dashboard from "../pages/DashboardView.vue";
+import Dashboard from "@/pages/DashboardView.vue";
 import HomePage from "@/pages/HomeView.vue";
 import RegisterPage from "@/pages/RegisterView.vue";
 import ResumePage from "@/pages/ResumeView.vue";
@@ -34,7 +34,7 @@ const routes = [
     path: "/login",
     name: "login",
     component: () =>
-      import(/* webpackChunkName: "about" */ "../pages/LoginView.vue"),
+      import(/* webpackChunkName: "about" */ "@/pages/LoginView.vue"),
   },
   {
     path: "/register",

@@ -45,6 +45,10 @@ export default {
         link: "https://twitter.com/Vitoiuoo",
       },
       {
+        icon: "mdi-slack",
+        link: "",
+      },
+      {
         icon: "mdi-linkedin",
         link: "https://www.linkedin.com/in/victor-magalh%C3%A3es-barreto-ti/",
       },

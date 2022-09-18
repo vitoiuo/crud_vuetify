@@ -1,11 +1,9 @@
-import axios from "axios";
-
-axios.defaults.baseURL = "http://localhost:3001";
+import api from "@/api";
 
 export default {
   login: (username, password) => {
     return new Promise((resolve, reject) => {
-      axios
+      api
         .post("/api/auth/login", { username, password })
         .then((response) => {
           console.log("API AUTH: SUCCESS");

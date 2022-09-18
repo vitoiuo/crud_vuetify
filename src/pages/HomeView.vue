@@ -11,8 +11,9 @@
         </div>
       </div>
       <v-img
+        :aspect-ratio="16 / 9"
         src="https://images.pexels.com/photos/1038628/pexels-photo-1038628.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-        height="512"
+        max-height="512"
       >
       </v-img>
 

@@ -19,6 +19,6 @@ export default {
     });
   },
   delProject(callback, id) {
-    axios.delete(`api/tasks/${id}`).then(() => callback());
+    axios.delete(`api/projects/${id}`).then(() => callback());
   },
 };

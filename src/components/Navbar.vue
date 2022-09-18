@@ -1,14 +1,14 @@
 <template>
   <nav>
     <v-app-bar app dark color="pink" class="padding-a-4" elevate-on-scroll>
-      <v-app-bar-nav-icon v-show="logged" @click="drawer = !drawer" />
+      <v-app-bar-nav-icon @click="drawer = !drawer" />
       <v-toolbar-title class="title text-uppercase">
         <span class="font-weight-black">Todo</span>
         <span class="font-weight-medium">Ist</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
 
-      <v-menu :disabled="!logged">
+      <v-menu>
         <template v-slot:activator="{ on, attrs }">
           <v-btn class="d-none d-sm-flex" plain v-bind="attrs" v-on="on">
             <v-icon left>mdi-chevron-down</v-icon>
@@ -39,13 +39,33 @@
     <v-navigation-drawer v-model="drawer" class="pt-4" app>
       <v-layout column align-center>
         <v-flex class="mt-4 text-center">
-          <v-avatar size="100">
-            <img
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ74JdjUsxNBQI_GtRFhMqrrazJsBljIhYp6gQALCqJww&s"
-              alt=""
-            />
-          </v-avatar>
-          <p class="subheading mt-1">Danonangus</p>
+          <v-menu bottom min-width="200px" rounded offset-y>
+            <template v-slot:activator="{ on }">
+              <v-btn icon x-large v-on="on">
+                <v-avatar color="brown" size="64">
+                  <span class="white--text text-h5">DN</span>
+                </v-avatar>
+              </v-btn>
+            </template>
+            <v-card>
+              <v-list-item-content class="justify-center">
+                <div class="mx-auto text-center">
+                  <v-avatar color="brown" size="64" class="mb-2">
+                    <span class="white--text text-h5">DN</span>
+                  </v-avatar>
+                  <h3>{{ loggedUser?.name }}</h3>
+                  <p class="text-caption mt-1">{{ loggedUser?.email }}</p>
+                  <v-divider class="my-3"></v-divider>
+                  <v-btn depressed rounded text> Edit Account </v-btn>
+                  <v-divider class="my-3"></v-divider>
+                  <v-btn depressed rounded text @click="loggingOut">
+                    Disconnect
+                  </v-btn>
+                </div>
+              </v-list-item-content>
+            </v-card>
+          </v-menu>
+          <p class="subheading mt-2">{{ loggedUser?.name }}</p>
         </v-flex>
       </v-layout>
       <v-list nav dense>
@@ -75,7 +95,7 @@ export default {
   name: "NavigationBar",
   data() {
     return {
-      logged: "",
+      loggedUser: {},
       drawer: false,
       links: [
         { icon: "mdi-home", text: "Home", route: { name: "home" } },
@@ -94,7 +114,8 @@ export default {
   },
   methods: {
     loggingOut() {
-      localStorage.removeItem("login");
+      localStorage.clear();
+      this.$router.push({ name: "home" });
     },
   },
   computed: {
@@ -107,7 +128,7 @@ export default {
   },
   watch: {},
   created() {
-    this.logged = localStorage.getItem("login");
+    this.loggedUser = JSON.parse(localStorage.getItem("loggedUserInfos"));
   },
 };
 </script>

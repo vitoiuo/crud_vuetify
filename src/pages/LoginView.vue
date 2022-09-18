@@ -65,7 +65,7 @@
 </template>
 
 <script>
-import AuthApi from "@/authApi";
+import AuthApi from "@/api/authApi";
 export default {
   name: "UserLogin",
   data() {
@@ -79,9 +79,8 @@ export default {
     login() {
       this.loading = true;
       AuthApi.login(this.username, this.password)
-        .then((resp) => {
-          console.log("login ok", resp);
-          localStorage.setItem("login", "logged");
+        .then((user) => {
+          this.saveLoggedUser(user);
           this.$router.push({ name: "resume" });
         })
         .catch((error) => {
@@ -91,6 +90,11 @@ export default {
         .finally(() => {
           this.loading = false;
         });
+    },
+    saveLoggedUser(user) {
+      window.localStorage.setItem("loggedUser", user.id);
+      window.localStorage.setItem("loggedUserInfos", JSON.stringify(user));
+      window.localStorage.setItem("loggedUserToken", user.token);
     },
   },
 };

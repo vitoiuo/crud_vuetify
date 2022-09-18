@@ -9,11 +9,7 @@
         >show categories</v-btn
       >
     </template>
-    <UseDraggable
-      class="absolute"
-      :initialValue="{ x: 0, y: 0 }"
-      v-slot="{ x, y }"
-    >
+    <UseDraggable class="absolute" :initialValue="{ x: 0, y: 0 }" v-slot="{}">
       <v-card elevation="16" max-width="400" class="mx-auto my-md-12">
         <v-card-actions>
           <v-btn right fab color="pink" text @click="dialog = false">

@@ -52,7 +52,7 @@
           mandatory
           class="ml-8 grey--text"
           v-model="toggleSearch"
-          row
+          column
         >
           <template v-slot:label>
             <div class="py-2">
@@ -70,6 +70,7 @@
           >
             <template v-slot:activator="{ on: tooltip }">
               <v-btn
+                retain-focus-on-click
                 small
                 plain
                 color="grey"
@@ -122,13 +123,13 @@
 </template>
 
 <script>
-import ProjectApi from "@/projectApi";
-import TaskApi from "@/taskApi";
+import ProjectApi from "@/api/projectApi";
+import TaskApi from "@/api/taskApi";
 import TaskCard from "@/components/TaskCard.vue";
 import TaskAddPopup from "@/components/TaskAdditionPopup.vue";
 import CategorieAddPopup from "@/components/CategorieAdditionPopup.vue";
 import CategorieScroller from "@/components/CategorieVScroller.vue";
-import projectApi from "@/projectApi";
+import projectApi from "@/api/projectApi";
 
 export default {
   name: "DashboardView",
