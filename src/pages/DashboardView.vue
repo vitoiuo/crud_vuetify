@@ -203,9 +203,8 @@ export default {
       }, categorie);
     },
     delCategorie(id) {
-      console.log(id);
       projectApi.delProject(() => {
-        this.getProjects;
+        this.getProjects();
       }, id);
     },
     scrollToTop() {

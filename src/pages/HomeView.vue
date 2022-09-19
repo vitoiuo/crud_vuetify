@@ -19,6 +19,7 @@
 
       <v-row justify="center"
         ><v-btn
+          x-large
           rounded
           class="white--text pa-8 font-weight-bold mt-16"
           color="pink"

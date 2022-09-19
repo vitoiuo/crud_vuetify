@@ -21,7 +21,7 @@
             <template v-slot:default="{ item }">
               <v-list-item :key="item.id">
                 <v-list-item-action>
-                  <v-btn fab small depressed color="pink white--text">
+                  <v-btn fab small depressed dark :color="item.color">
                     {{ item.id }}
                   </v-btn>
                 </v-list-item-action>

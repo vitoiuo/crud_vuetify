@@ -41,7 +41,7 @@
       </v-btn>
     </v-app-bar>
 
-    <v-navigation-drawer v-model="drawer" class="pt-4" app>
+    <v-navigation-drawer v-model="drawer" app>
       <v-layout column align-center>
         <v-flex class="mt-4 text-center">
           <v-menu bottom min-width="200px" rounded offset-y>

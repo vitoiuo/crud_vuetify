@@ -1,15 +1,24 @@
 <template>
   <div class="login py-4 px-2">
+    <v-snackbar top v-model="snackbar" :timeout="timeout">
+      {{ text }}
+      <template v-slot:action="{ attrs }">
+        <v-btn color="pink" text fab v-bind="attrs" @click="snackbar = false">
+          <v-icon>mdi-close</v-icon>
+        </v-btn>
+      </template>
+    </v-snackbar>
     <h1 class="grey--text font-weight-light">Login</h1>
     <v-container fluid fill-height class="my-8">
       <v-layout justify-center xl="3">
         <v-flex xs12 sm8 xl4>
           <v-toolbar dark color="pink">
-            <v-toolbar-title>Login form</v-toolbar-title>
+            <v-toolbar-title class="text-h5">Login form</v-toolbar-title>
           </v-toolbar>
           <v-card class="pa-8">
             <v-form class="py-8">
               <v-text-field
+                outlined
                 v-model="username"
                 prepend-icon="mdi-account"
                 name="login"
@@ -17,6 +26,7 @@
                 type="text"
               ></v-text-field>
               <v-text-field
+                outlined
                 v-model="password"
                 id="password"
                 prepend-icon="mdi-lock"
@@ -72,6 +82,9 @@ export default {
       username: "",
       password: "",
       loading: false,
+      snackbar: false,
+      text: "Login failed",
+      timeout: 2000,
     };
   },
   methods: {
@@ -82,9 +95,8 @@ export default {
           this.saveLoggedUser(user);
           this.$router.push({ name: "resume" });
         })
-        .catch((error) => {
-          console.log("login falhou", error);
-          //mostrar toast de usuário ou senha inválidos
+        .catch(() => {
+          this.snackbar = true;
         })
         .finally(() => {
           this.loading = false;

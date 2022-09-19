@@ -3,6 +3,45 @@
     <h1 class="text-h3 grey--text font-weight-black text--lighten-1">Resume</h1>
 
     <v-container class="my-8">
+      <v-row>
+        <v-col
+          ><div class="mb-16">
+            <h2 class="text-h4 grey--text text--lighten-1">
+              Tasks:&nbsp;
+              <v-fade-transition leave-absolute>
+                <span :key="`tasks-${tasks.length}`">
+                  {{ tasks.length }}
+                </span>
+              </v-fade-transition>
+            </h2>
+            <v-row class="my-1" align="center">
+              <strong
+                class="mx-4 pink--text text--lighteen-2 font-weight-light"
+              >
+                Remaining: {{ remainingTasks }}
+              </strong>
+
+              <v-divider vertical></v-divider>
+
+              <strong
+                class="mx-4 grey--text text--lighteen-4 font-weight-light"
+              >
+                Completed: {{ completedTasks }}
+              </strong>
+
+              <v-spacer></v-spacer>
+
+              <v-progress-circular
+                size="48"
+                width="6"
+                color="pink"
+                :value="progress"
+                class="mr-2"
+              ></v-progress-circular>
+            </v-row>
+          </div>
+        </v-col>
+      </v-row>
       <v-row justify="center">
         <v-col
           cols="12"
@@ -102,7 +141,7 @@
           :to="{ name: 'dashboard' }"
           large
           color="pink"
-          class="my-16"
+          class="my-16 mx-16"
         >
           <span>View all tasks</span>
           <v-icon right>mdi-arrow-right</v-icon></v-btn
@@ -146,13 +185,24 @@ export default {
       );
     },
   },
-
   computed: {
     tasksProjects() {
       return this.tasks.reduce((a, b) => {
         a[b.project] = a[b.project] ? a[b.project] + 1 : 1;
         return a;
       }, {});
+    },
+    completedTasks() {
+      return this.tasks.filter((task) => task.isDone).length;
+    },
+    progress() {
+      if (!this.completedTasks) {
+        return 0;
+      }
+      return (this.completedTasks / this.tasks.length) * 100;
+    },
+    remainingTasks() {
+      return this.tasks.length - this.completedTasks;
     },
   },
   created() {
