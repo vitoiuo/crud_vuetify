@@ -3,7 +3,7 @@
     <template v-slot:activator="{ on, attrs }">
       <v-btn
         large
-        class="mt-8 mb-4 pink white--text lighten-1"
+        class="my-8 pink white--text lighten-1"
         v-on="on"
         v-bind="attrs"
         >show categories</v-btn

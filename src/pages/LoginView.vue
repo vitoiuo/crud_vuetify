@@ -108,6 +108,9 @@ export default {
       window.localStorage.setItem("loggedUserToken", user.token);
     },
   },
+  created() {
+    this.username = this.$route.params.username;
+  },
   beforeDestroy() {
     this.$router.go();
   },

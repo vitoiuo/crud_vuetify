@@ -41,9 +41,18 @@
       </v-btn>
     </v-app-bar>
 
-    <v-navigation-drawer v-model="drawer" app>
+    <v-navigation-drawer temporary v-model="drawer" app>
+      <v-list color="pink">
+        <v-list-item>
+          <v-list-item-title class="text-h6 white--text">
+            <span class="font-weight-black">TODO</span>
+            <span class="font-weight-medium">IST</span>
+          </v-list-item-title>
+        </v-list-item>
+      </v-list>
+      <v-divider></v-divider>
       <v-layout column align-center>
-        <v-flex class="mt-4 text-center">
+        <v-flex class="mt-8 text-center">
           <v-menu bottom min-width="200px" rounded offset-y>
             <template v-slot:activator="{ on }">
               <v-btn icon x-large v-on="on">

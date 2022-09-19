@@ -37,9 +37,48 @@
       </div>
       <div class="pb-8">
         <v-toolbar flat color="transparent">
-          <v-btn icon>
-            <v-icon>mdi-arrow-left</v-icon>
-          </v-btn>
+          <v-menu>
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn
+                retain-focus-on-click
+                fab
+                text
+                color="grey"
+                v-bind="attrs"
+                v-on="on"
+              >
+                <v-icon>mdi-sort</v-icon>
+              </v-btn>
+            </template>
+            <v-list>
+              <v-tooltip
+                bottom
+                v-for="sortOption in sortingOptions"
+                :key="sortOption.key"
+              >
+                <template v-slot:activator="{ on: tooltip }">
+                  <v-list-item
+                    @click="sortBy(sortOption.key)"
+                    slot="activator"
+                    v-on="tooltip"
+                    class=""
+                  >
+                    <v-list-item-icon>
+                      <v-icon size="20" color="grey lighten-1">{{
+                        sortOption.icon
+                      }}</v-icon>
+                    </v-list-item-icon>
+                    <v-list-item-title
+                      class="text-lowercase grey--text lighten-1"
+                    >
+                      {{ sortOption.title }}
+                    </v-list-item-title>
+                  </v-list-item>
+                </template>
+                <span>{{ sortOption.toolTipText }}</span>
+              </v-tooltip>
+            </v-list>
+          </v-menu>
           <v-text-field
             v-model="search"
             color="pink"
@@ -62,33 +101,8 @@
           <v-radio color="pink" label="Tasks" :value="false"></v-radio>
           <v-radio color="pink" label="Categories" :value="true"></v-radio>
         </v-radio-group>
-        <v-layout row class="mt-4 mb-8">
-          <v-tooltip
-            bottom
-            v-for="sortOption in sortingOptions"
-            :key="sortOption.key"
-          >
-            <template v-slot:activator="{ on: tooltip }">
-              <v-btn
-                retain-focus-on-click
-                small
-                plain
-                color="grey"
-                class="px-12"
-                @click="sortBy(sortOption.key)"
-                slot="activator"
-                v-on="tooltip"
-              >
-                <v-icon left small> {{ sortOption.icon }}</v-icon>
-                <span class="caption text-lowercase">{{
-                  sortOption.title
-                }}</span>
-              </v-btn>
-            </template>
-            <span>{{ sortOption.toolTipText }}</span>
-          </v-tooltip>
-        </v-layout>
-        <div class="mt-16">
+
+        <div class="mt-8">
           <TaskAddPopup
             :projects="projects.map((e) => e.name)"
             @task-added="

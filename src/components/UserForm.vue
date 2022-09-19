@@ -58,7 +58,7 @@
                 color="pink white--text"
                 class="mr-4 font-weight-bold"
                 router
-                :to="{ name: 'login' }"
+                :to="{ name: 'login', params: { username: newUser.username } }"
               >
                 Register
               </v-btn></v-card-actions
@@ -128,7 +128,7 @@ export default {
       authApi.singUp(this.newUser);
     },
   },
-  beforeRouteDestroy() {
+  beforeDestroy() {
     this.addUser();
   },
 };
